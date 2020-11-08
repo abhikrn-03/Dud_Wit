@@ -59,6 +59,11 @@
           <div class="row">
             <div class="col-lg-12">
               <h1><%=title%></h1>
+              <h5>Last edited <%=_id.getTimestamp().toString().substring(0,3)%>,
+                <%=_id.getTimestamp().toString().substring(4,10)%></h5>
+              <% if ((new Date().toString().substring(0,16))==_id.getTimestamp().toString().substring(0,16)){%>
+              <h5><%=_id.getTimestamp().toString().substring(16,21)%> GMT</h5>
+              <%}%>
               <p><%=body%></p>
               <% if (Flag){%>
                 <a href="/edit/<%= _id %>">Edit Blog</a>

@@ -71,6 +71,11 @@
 
                                     <h1><%=blog.title%></h1>
                                     <p class="blogg1">
+                                        <h5>Last edited <%=blog._id.getTimestamp().toString().substring(0,3)%>,
+                                            <%=blog._id.getTimestamp().toString().substring(4,10)%></h5>
+                                        <% if ((new Date().toString().substring(0,16))==blog._id.getTimestamp().toString().substring(0,16)){%>
+                                        <h5><%=blog._id.getTimestamp().toString().substring(16,21)%> GMT</h5>
+                                        <%}%>
                                         <%=blog.body.substring(0, 100) + " ..."%>
                                         <a href="/blogs/<%=blog.title%>">Read More</a>
                                     </p>
