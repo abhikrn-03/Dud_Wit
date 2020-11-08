@@ -65,7 +65,9 @@
               <h5><%=_id.getTimestamp().toString().substring(16,21)%> GMT</h5>
               <%}%>
               <br>
-              <p><%=body%></p>
+              <div class="blogg1">
+                <p><%=body%></p>
+              </div>
               <% if (Flag){%>
                 <a href="/edit/<%= _id %>">Edit Blog</a>
                 <a href="/delete/<%= _id %>">Delete Blog</a>
