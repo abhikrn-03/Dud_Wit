@@ -11,6 +11,7 @@ let blogs = []
 router.get('/profile/:penName', async (req, res) => {
     const penName = req.params.penName
     blogs = await Blog.find({penName: penName})
+    blogs.reverse()
     try{
         const user = await User.findOne({penName})
         if (req.user==undefined && (user)){
