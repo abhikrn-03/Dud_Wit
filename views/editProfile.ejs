@@ -1,5 +1,12 @@
+
+
 <%- include("partials/header"); -%>
 
+
+<link rel="stylesheet" href="/css/edit.css">
+<body>
+<div class="prof">
+<div class="wrap">
 <h1>Edit Profile</h1>
 <form action="/users/editProfile" method="post">
     <input type="text" name="name" placeholder="Name: <%= name %>" />
@@ -9,5 +16,7 @@
     <input type="password" name="confirmNewPassword" placeholder="Confirm Password" /> -->
     <button>Apply Changes</button>
 </form>
-
+</div>
+</div>
+</body>
 <!-- <%- include("partials/footer"); -%> -->

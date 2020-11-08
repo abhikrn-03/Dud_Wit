@@ -1,5 +1,11 @@
-<h1>Hey, <%= displayName%></h1>
-<h1>We need just a few more details to get your profile setup.</h1>
+<link rel="stylesheet" href="/css/edit.css">
+
+<body>
+
+    <div class="prof">
+<div class="wrap">
+<h1>Hey, <%= displayName%> </h1>
+<h2>We need just a few more details to get your profile setup.</h2>
 
 <form action="/users/setupProfile" method="post">
     <input type="text" name="penName" placeholder="Pen Name" required/><br>
@@ -10,3 +16,7 @@
     <p><%=message%></p>
     <button>Submit</button>
 </form>
+</div>
+</div>
+
+</body>
