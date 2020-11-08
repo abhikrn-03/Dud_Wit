@@ -24,6 +24,7 @@ router.get('/compose', connectEnsureLogin.ensureLoggedIn('/users/login'), async 
 router.get('/community', async (req, res) => {
     try {
         blogs = await Blog.find({})
+        blogs.reverse()
         if (req.user){
             await res.render('community', {
             title: 'They are something more than just blogs..',
