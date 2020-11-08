@@ -1,5 +1,7 @@
 const path = require('path')
 const express = require("express")
+const dotenv = require('dotenv')
+dotenv.config()
 const passport = require('passport')
 const bodyParser = require("body-parser")
 const ejs = require('ejs')
