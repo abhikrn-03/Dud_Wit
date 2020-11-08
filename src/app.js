@@ -81,7 +81,9 @@ passport.use('local-login', new LocalStrategy({
         if (err)
             return done(err);
         if (!user)
-            return done(null, false, {message: 'Incorrect Pen Name or Password'} );
+            return done(null, false, {message: 'Incorrect Pen Name or Password'});
+        if (!user.password)
+            return done(null, false, {message: 'Incorrect Pen Name or Password'})
         if (!user.validPassword(password))
             return done(null, false, {message: 'Incorrect Pen Name or Password'});
         return done(null, user);
