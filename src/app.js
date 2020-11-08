@@ -89,7 +89,7 @@ passport.use('local-login', new LocalStrategy({
 passport.use('google-auth', new GoogleStrategy({
     clientID: '652219290709-kjebgljvnkriiup29d2g5h5lgml6d123.apps.googleusercontent.com',
     clientSecret: 'JtLsRsi9lhjN49PiHxXiufXb',
-    callbackURL: "http://localhost:3000/auth/google/BlogBower"
+    callbackURL: "http://blogbower.herokuapp.com/auth/google/BlogBower"
 },
 (accessToken, refreshToken, profile, done) => {
     User.findOne({
