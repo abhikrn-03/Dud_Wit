@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-const passportLocalMongoose = require('passport-local-mongoose')
+var bcrypt = require('bcryptjs')
+const passport = require('passport')
+// const passportLocalMongoose = require('passport-local-mongoose')
 
 const userSchema = mongoose.Schema({
     name: {
@@ -20,14 +22,28 @@ const userSchema = mongoose.Schema({
             }
         }
     },
-    username: {
+    password: {
+        type: String,
+        validate(value) {
+            if (value.length < 7){
+                throw new Error("Password must not be less than 7 characters.")
+            }
+        }
+    },
+    penName: {
         type: String,
         trim: true,
-        required: true,
         unique: true
     },
     gender: {
-        type: String
+        type: String,
+        trim: true,
+        uppercase: true,
+        validate(value) {
+            if(value !== 'M' && value !== 'F' && value !== 'O'){
+                throw new Error("Invalid input for gender.")
+            }
+        }
     },
     age: {
         type: Number,
@@ -37,6 +53,9 @@ const userSchema = mongoose.Schema({
                 throw new Error('Age must be a positive number')
             }
         }
+    },
+    google_id: {
+        type: String
     }
 })
 
@@ -50,20 +69,20 @@ const userSchema = mongoose.Schema({
 //     return token
 // }
 
-// userSchema.statics.findByCredentials = async (email, password) => {
-//     const user = await User.findOne({ email })
+// userSchema.statics.validate = async (email, password) => {
+//     const user = await User.findOne({ email: email })
 
 //     if (!user) {
-//         throw new Error('Unable to login')
+//         return false
 //     }
 
 //     const isMatch = await bcrypt.compare(password, user.password)
 
 //     if (!isMatch) {
-//         throw new Error('Unable to login')
+//         return false
 //     }
 
-//     return user
+//     return true
 // }
 
 // userSchema.pre('save', async function(next) {
@@ -71,11 +90,17 @@ const userSchema = mongoose.Schema({
 //     if (user.isModified('password')){
 //         user.password = await bcrypt.hash(user.password, 8)
 //     }
-
 //     next()
 // })
 
-userSchema.plugin(passportLocalMongoose)
+userSchema.methods.generateHash = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+}
+
+userSchema.methods.validPassword = function(password){
+    return bcrypt.compareSync(password, this.password)
+}
+
 
 const User = mongoose.model('User', userSchema)
 

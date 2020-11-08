@@ -1,0 +1,13 @@
+<%- include("partials/header"); -%>
+
+<h1>Edit Profile</h1>
+<form action="/users/editProfile" method="post">
+    <input type="text" name="name" placeholder="Name: <%= name %>" />
+    <input type="text" name="age" placeholder="Age: <%= age %>" />
+    <input type="text" name="gender" placeholder="Gender: <%= gender %>" />
+    <!-- <input type="password" name="newPassword" placeholder="Enter New Password" />
+    <input type="password" name="confirmNewPassword" placeholder="Confirm Password" /> -->
+    <button>Apply Changes</button>
+</form>
+
+<%- include("partials/footer"); -%>

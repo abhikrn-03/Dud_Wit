@@ -1,0 +1,112 @@
+<%- include("partials/header1"); -%>
+
+<link rel="stylesheet" href="/css/home.css">
+</head>
+
+
+
+<body>
+    <div class="homey">
+        <div id="wrapper">
+
+            <!-- Sidebar Nav-->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <% if (name!=null){%>
+                        <li class="sidebar-nav"><a href="/compose" class="pub-btn btn"> Create A New Blog</a> </li>
+                        <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
+                    <%} else {%>
+                        <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
+                        <li class="sidebar-nav"><a href="/users/login"> Dashboard</a> </li>
+                    <%}%>
+                    <li class="sidebar-nav"><a href="/community"> Community</a> </li>
+                    <li class="sidebar-nav"><a href="#">History</a> </li>
+                    <li class="sidebar-nav"><a href="#">Follow US</a> </li>
+                </ul>
+
+            </div>
+
+            <!--main page content-->
+
+
+            <div id="page-content-wrapper">
+
+                <!-- NavBar -->
+                <div class="cont">
+                    <nav class="navbar navbar-default">
+                        <div class="cont">
+                            <div class="navbar-header">
+                                <p class="navbar-brand"><a href="#" id="menu-toggle"><i
+                                            class="fa fa-fw fa-align-justify"></i></a></p>
+                                <p class="navbar-brand"><a href="/">B L O G B O W E R</a></p>
+                            </div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <% if (name!=null){%>
+                                <li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=penName%>">HOME</a></li>
+                                <%}%>
+                                <li id="about" class="nav-item"><a class="nav-link" href="/about">ABOUT US</a></li>
+                                <li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a>
+                                </li>
+                                <li id="compose" class="nav-item"><a class="nav-link" href="/compose">CREATE</a></li>
+                                <li class="nav-item"><a id="menu-toggle-rt" class="nav-link" href="#"><i
+                                            class="fa fa-fw fa-user"></i></a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
+
+                <!--Content-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="blogss">
+                                <h1>Home</h1>
+                                <h2> <%= title %> </h2>
+
+
+                                <%  blogs.forEach(function(blog){ %>
+
+                                <div class="blog1">
+
+                                    <h1><%=blog.title%></h1>
+                                    <p class="blogg1">
+                                        <%=blog.body.substring(0, 100) + " ..."%>
+                                        <a href="/blogs/<%=blog.title%>">Read More</a>
+                                    </p>
+                                </div>
+
+                                <br>
+                                <br>
+
+
+                                <% }) %>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <%- include("partials/sidebar"); -%>
+            <!-- <div id="sidebar-wrapper-rt">
+                <ul class="sidebar-nav-rt">
+                    <li class="sidebar-nav-rt">USER</li>
+                    <li class="sidebar-nav-rt"><%=name%></li>
+                    <li class="sidebar-nav-rt">User NAME </li>
+                    <li class="sidebar-nav-rt">User Penname AGE</li>
+                    <li class="sidebar-nav-rt">User AGE</li>
+                    <li class="sidebar-nav-rt btn pub-btn"><a href="/users/editProfile"> EDIT Profile</a> </li> -->
+                    <!-- <li class="sidebar-nav-rt btn pub-btn"><a href="/users/login"> Sign In</a> </li> -->
+                 <!-- </ul>  -->
+
+            <!-- </div> --> 
+
+        </div>
+    </div>
+
+    <!-- Menu Toggle JS-->
+    <script src="/js/sidebar.js"></script>
+    <!--<%- include("partials/footer1"); -%> -->

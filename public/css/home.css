@@ -1,0 +1,174 @@
+body{
+	background: #eae7dc;;
+}
+.logey {
+	background: #eae7dc;;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 100%;
+	margin: -20px 0 50px;
+}
+
+
+#sidebar-wrapper{
+    z-index:1;
+    position: absolute;
+    width:0;
+    height:1080px;
+    overflow-y:hidden;
+    background: linear-gradient(to left, #af423b,#9b3a33);
+    opacity: 0.9;
+    transition: all 0.2s ease-out;
+}
+
+/* Main Content*/
+#page-content-wrapper{
+    width:100%;
+    position: absolute;
+    padding: 50px;
+    transition: all 0.2s ease-out;
+}
+
+
+/* Change Width of the sidebar*/
+
+#wrapper.menuDisplayed #sidebar-wrapper{
+    width:250px;
+    transition: all 0.2s ease-out;
+}
+
+#wrapper.menuDisplayed #page-content-wrapper{
+    padding-left:250px;
+    transition: all 0.2s ease-in;
+}
+
+/*Sidebar Style*/
+
+.pub-btn{
+    background:#da7b93;
+    border:4px solid #da7b93;
+    border-radius:20px;
+    padding:10px 10px;
+}
+
+.sidebar-nav{
+    padding:10px 5px;
+    list-style:none;
+}
+
+.sidebar-nav li{
+    text-indent:20px;
+    line-height:40px;
+    color:#ddd;
+}
+
+.sidebar-nav li a{
+    display: block;
+    text-decoration:none;
+    color:#ddd;
+}
+
+/* .sidebar-nav li a:hover{
+    background:#424242;
+    transition: all 0.6s ease-out;
+} */
+
+/* .sidebar-nav li .btn:hover{
+    background-color: #ff0040;;
+
+} */
+
+
+
+/* Right Sidebar */
+
+#sidebar-wrapper-rt{
+    display:flex;
+    flex-direction: row;
+    flex:right;
+    right:0;
+    position: absolute;
+    z-index:1;
+    width:0;
+    height:1080px;
+    overflow-y:hidden;
+    background: linear-gradient(to left, #af423b,#9b3a33);
+    opacity: 0.9;
+    transition: all 0.2s ease-out;
+}
+
+/* Change Width of the sidebar*/
+
+#wrapper.menuDisplayedrt #sidebar-wrapper-rt{
+    right:0;
+    width:250px;
+    transition: all 0.2s ease-out;
+}
+
+#wrapper.menuDisplayedrt #page-content-wrapper{
+    padding-right:250px;
+    transition: all 0.2s ease-in;
+}
+
+/* Right Sidebar Design*/
+/*Sidebar Style*/
+
+.sidebar-nav-rt{
+    padding:10px 10px 10px 5px;
+    list-style:none;
+}
+
+.sidebar-nav-rt li{
+    text-indent:20px;
+    line-height:40px;
+    color:#ddd;
+}
+
+.sidebar-nav-rt li a{
+    display: block;
+    text-decoration:none;
+    color:#ddd;
+}
+
+/* .sidebar-nav-rt li a:hover{
+    background:#757474;
+    transition: all 0.6s ease-out;
+} */
+
+/* .sidebar-nav-rt li .btn:hover{
+    background-color: #ff0040;;
+
+} */
+
+
+/* Blogs Design */
+
+.blogss{
+    padding: 60px;
+    background: #eae7dc;;
+}
+
+.blog1{
+    padding: 30px 20px 20px 30px;
+    border-radius: 20px;
+    box-shadow: 13px 13px 20px#d6d3ca,
+    -13px -13px 20px #f7f4ec;
+}
+
+.blogg1{
+    color: #424242;
+}
+
+.blog1 h1{
+    font-weight:bold;
+    letter-spacing: 4px;
+}
+
+.blogss h1{
+    font-weight:bold;
+    letter-spacing: 10px;
+    padding:10px;
+}

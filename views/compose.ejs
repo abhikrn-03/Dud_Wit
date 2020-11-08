@@ -1,14 +1,78 @@
+<%- include("partials/header1"); -%>
 
-<%- include("partials/header"); -%>
-    <h1>Compose</h1>
-    <form class="" action="/compose" method="post">
-      <div class="form-group">
-        <label>Title</label>
-        <input class="form-control" type="text" name="postTitle">
-        <label>Post</label>
-        <textarea class="form-control" name="postBody" rows="5" cols="30"></textarea>
+<link rel="stylesheet" href="/css/home.css">
+</head>
+
+
+
+<body>
+  <div class="homey">
+    <div id="wrapper">
+
+      <!-- Sidebar Nav-->
+      <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <!-- <li class="sidebar-nav"><a href="/compose" class="pub-btn btn"> Create A New Blog</a> </li> -->
+          <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
+          <li class="sidebar-nav"><a href="/community"> Community</a> </li>
+          <li class="sidebar-nav"><a href="#">History</a> </li>
+          <li class="sidebar-nav"><a href="#">Follow US</a> </li>
+        </ul>
+
       </div>
-      <button class="btn btn-primary" type="submit" name="button">Publish</button>
-    </form>
 
-<%- include("partials/footer"); -%>
+      <!--main page content-->
+
+
+      <div id="page-content-wrapper">
+
+        <!-- NavBar -->
+        <div class="cont">
+          <nav class="navbar navbar-default">
+            <div class="cont">
+              <div class="navbar-header">
+                <p class="navbar-brand"><a href="#" id="menu-toggle"><i class="fa fa-fw fa-align-justify"></i></a></p>
+                <p class="navbar-brand"><a href="/">B L O G B O W E R</a></p>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                <li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=penName%>">HOME</a></li>
+                <li id="about" class="nav-item"><a class="nav-link" href="/about">ABOUT US</a></li>
+                <li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a></li>
+                <!-- <li id="compose" class="nav-item"><a class="nav-link" href="/compose">CREATE</a></li> -->
+                <li class="nav-item"><a id="menu-toggle-rt" class="nav-link" href="#"><i
+                      class="fa fa-fw fa-user"></i></a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+
+        <!--Content-->
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12">
+              <h1>Compose</h1>
+              <form class="" action="/compose" method="post">
+                <div class="form-group">
+                  <label>Title</label>
+                  <input class="form-control" value="<%= blogTitle %>" type="text" name="postTitle">
+                  <label>Post</label>
+                  <textarea class="form-control" name="postBody" rows="5" cols="30"><%= blogBody %></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit" name="button">Publish</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <%- include("partials/sidebar"); -%>
+</div>
+</div>
+<p>Warning: Please do not leave this page or refresh, before publishing!</p>
+<!-- Menu Toggle JS-->
+<script src="/js/sidebar.js"></script>
+<!--<%- include("partials/footer1"); -%> -->
+
+    
