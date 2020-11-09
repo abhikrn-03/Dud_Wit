@@ -1,25 +1,85 @@
 <%  blogs.forEach(function(blog){ %>
 
-    <a id="blog-title" href="/blogs/<%=blog.title%>">
+<a id="blog-title" href="/blogs/<%=blog.title%>">
     <div class="blog1">
+        <% let today = new Date().toString() %>
+        <% let bStamp = blog._id.getTimestamp() %>
+        <% let bHour = bStamp.getHours() %>
+        <% let bMin = bStamp.getMinutes() %>
+        <% let bMonth = bStamp.getMonth() %>
+        <% let bDate = bStamp.getDate() %>
+        <% let bYear = bStamp.getFullYear() %>
+        <% let bDay = bStamp.getDay() %>
+        <% let meridian = "a.m" %>
+        <% let zero = false %>
+        <% const week = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] %>
+        <% const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
+        <% days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] %>
+        <% if ((bYear % 4 == 0 && bYear % 100 !=0) || bYear % 400 == 0){ %>
+            <% days[1] = 29 %>
+        <% } %>
+        <% let t_mins_ist = bHour * 60 + bMin + 330 %>
+        <% if (t_mins_ist > 1440){ %>
+            <% t_mins_ist = t_mins_ist - 1440 %>
+            <% bDate = bDate + 1 %>
+            <% bDay = bDay + 1 %>
+            <% if (bDay > 6){ %>
+                <% bDay = bDay - 7 %>
+            <% } %>
+            <% if (bDate > days[bMonth]){ %>
+                <% bDate = bDate - days[bMonth] %>
+                <% bMonth = bMonth + 1 %>
+                <% if (bMonth > 12){ %>
+                    <% bMonth = bMonth - 12 %>
+                    <% bYear = bYear + 1 %>
+                <% } %>
+            <% } %>
+        <% } %>
+        <% bHour = Math.floor(t_mins_ist / 60) %>
+        <% bMin = t_mins_ist % 60 %>
+        <% if (bHour>11) { %>
+            <% meridian = 'p.m' %>
+        <% } %>
+        <% if (bHour>12){ %>
+            <% bHour = bHour - 12 %>
+        <% } %>
+        <% if (bHour==0){ %>
+            <% bHour = 12 %>
+        <% } %>
+        <% if (bMin<10){ %>
+            <% zero = true %>
+        <% } %>
         <h1><%=blog.title%></h1>
-        <% if ((new Date().toString().substring(0,16))==blog._id.getTimestamp().toString().substring(0,16)){%>
+        <% if ((today.substring(0,15))==bStamp.toString().substring(0,15)){%>
             <span class="date">
-                <em><%=blog._id.getTimestamp().toString().substring(16,21)%> GMT</em>
+            <% if (zero) { %>
+                <em>Published today at <%=bHour%>:0<%=bMin%> <%=meridian%></em>
+            <% } else { %>
+                <em>Published today at <%=bHour%>:<%=bMin%> <%=meridian%></em>
+            <% } %>
+            </span><br>
+        <%} else if ((today.substring(4,7)==bStamp.toString().substring(4,7))&&(parseInt(today.substring(8,10))-parseInt(bStamp.toString().substring(8,10))==1)&&(today.substring(11,15)==bStamp.toString().substring(11,15))) {%>
+            <span class="date">
+            <% if (zero){ %>
+                <em>Published yesterday at <%=bHour%>:0<%=bMin%> <%=meridian%> </em>
+            <% } else { %>
+                <em>Published yesterday at <%=bHour%>:<%=bMin%> <%=meridian%> </em>
+            <% } %>
             </span><br>
         <%} else {%>
             <span class="date">
-                <em>Last edited <%=blog._id.getTimestamp().toString().substring(0,3)%>, <%=blog._id.getTimestamp().toString().substring(4,10)%></em>
+            <em>Published on <%=week[bDay]%>, <%=month[bMonth]%> <%=bDate%></em>
             </span><br>
         <%}%>
-        <a id="blogger" href="/profile/<%=blog.penName%>"><%=blog.penName%></a>
+        <% if (Flag){%>
+            <a id="blogger" href="/profile/<%=blog.penName%>"><%=blog.penName%></a>
+        <%}%>
         <br><br>
         <p class="blogg1">
             <% if (blog.body.length<400){ %>
                 <%=blog.body%>
             <%} else {%>
-                <%=blog.body.substring(0, 400) + " ..."%>
-                <a href="/blogs/<%=blog.title%>">read full blog</a>
+                <%=blog.body.substring(0, 446) + " ..."%>
             <%}%>
         </p>
     </div>

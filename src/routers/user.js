@@ -20,6 +20,7 @@ router.get('/profile/:penName', async (req, res) => {
             name: null,
             penName: null,
             email: null,
+            Flag: false,
             blogs
             })
         }
@@ -29,6 +30,7 @@ router.get('/profile/:penName', async (req, res) => {
             penName: req.user.penName,
             name: req.user.name,
             email: req.user.email,
+            Flag: false,
             blogs
             })
         }
@@ -38,6 +40,7 @@ router.get('/profile/:penName', async (req, res) => {
             penName: req.user.penName,
             name: req.user.name,
             email: req.user.email,
+            Flag: false,
             blogs
             }) 
         }
