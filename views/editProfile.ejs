@@ -8,12 +8,13 @@
 <div class="prof">
 <div class="wrap1">
 <h1>Edit Profile</h1>
-<form action="/users/editProfile" method="post">
+<form action="/users/editProfile" method="post" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="Name: <%= name %>" />
     <input type="text" name="age" placeholder="Age: <%= age %>" />
     <input type="text" name="gender" placeholder="Gender: <%= gender %>" />
     <!-- <input type="password" name="newPassword" placeholder="Enter New Password" />
     <input type="password" name="confirmNewPassword" placeholder="Confirm Password" /> -->
+    <input type="file" name="buffer" placeholder="Upload avatar" />
     <br>
     <button>Apply Changes</button>
 </form>
