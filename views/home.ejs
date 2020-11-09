@@ -1,42 +1,4 @@
 
-<!-- <%- include("partials/header"); -%>
-
-<div class="wrapper">
-
-
-  <div class="sidebar-wrapper">
-    <ul>
-      <li>
-        
-      </li>
-    </ul>
-  </div>
-  <div class="page-content-wrapper">
-    <h1>Home</h1>
-    <p> <%= title %> </p>
-
-
-  <%  blogs.forEach(function(blog){ %>
-
-    <h1><%=blog.title%></h1>
-    <p>
-    <%=blog.body.substring(0, 100) + " ..."%>
-    <a href="/blogs/<%=blog.title%>">Read More</a>
-    </p>
-
-
-    <% }) %>
-  </div>
-
-  </div>
-
-<%- include("partials/footer"); -%>
-
-
--->
-
-
-  
 <%- include("partials/header1"); -%>
 
 <link rel="stylesheet" href="/css/home.css">
@@ -63,60 +25,48 @@
       <!--main page content-->
 
 
-<div id="page-content-wrapper">
+  <div id="page-content-wrapper">
 
       <!-- NavBar -->
-<div class="cont">
-  <nav class="navbar navbar-default">
     <div class="cont">
-      <div class="navbar-header">
-        <p class="navbar-brand"><a href="#" id="menu-toggle"><i class="fa fa-fw fa-align-justify"></i></a></p>
-        <p class="navbar-brand"><a href="/">B L O G B O W E R</a></p>
-      </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=penName%>">HOME</a></li>
-          <li id="about" class="nav-item"><a  class="nav-link" href="/about">ABOUT US</a></li>
-          <li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a></li>
-          <li id="compose" class="nav-item"><a class="nav-link" href="/compose">CREATE</a></li>
-          <li class="nav-item"><a id="menu-toggle-rt" class="nav-link" href="#"><i class="fa fa-fw fa-user"></i></a></li>
-        </ul>
+      <nav class="navbar navbar-default">
+        <div class="cont">
+          <div class="navbar-header">
+            <p class="navbar-brand"><a href="#" id="menu-toggle"><i class="fa fa-fw fa-align-justify"></i></a></p>
+            <p class="navbar-brand"><a href="/">B L O G B O W E R</a></p>
+          </div>
+            <ul class="nav navbar-nav navbar-right">
+              <li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=penName%>">HOME</a></li>
+              <li id="about" class="nav-item"><a  class="nav-link" href="/about">ABOUT US</a></li>
+              <li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a></li>
+              <li id="compose" class="nav-item"><a class="nav-link" href="/compose">CREATE</a></li>
+              <li class="nav-item"><a id="menu-toggle-rt" class="nav-link" href="#"><i class="fa fa-fw fa-user"></i></a></li>
+            </ul>
+          </div>
+        </nav>
     </div>
-  </nav>
-  </div>
   
 
   <!--Content-->
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="blogss">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="blogss">
             <h1>Home</h1>
             <h2> <%= title %> </h2>
         
             <%- include("partials/dispblogs"); -%>
           
           </div>
-          </div>
         </div>
       </div>
-      </div>
+    </div>
+  </div>
 
 
     <%- include("partials/sidebar"); -%>
-    <!-- <div id="sidebar-wrapper-rt">
-      <ul class="sidebar-nav-rt">
-        <li class="sidebar-nav-rt">USER</li>
-        <li class="sidebar-nav-rt">User Picture </li>
-        <li class="sidebar-nav-rt"><%=name%></li>
-        <li class="sidebar-nav-rt">User Penname AGE</li>
-        <li class="sidebar-nav-rt">User AGE</li>
-        <li class="sidebar-nav-rt btn pub-btn"><a href="/users/editProfile"> EDIT Profile</a> </li>
-        <li class="sidebar-nav-rt btn pub-btn"><a href="/users/logout"> sign out</a> </li>
-      </ul>
 
-    </div> -->
-
-</div>
+    </div>
 </div>
 
 <!-- Menu Toggle JS-->

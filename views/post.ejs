@@ -13,11 +13,11 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <% if (name!=null){%>
-          <li class="sidebar-nav"><a href="/compose" class="pub-btn btn"> Create A New Blog</a> </li>
-          <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
+            <li class="sidebar-nav"><a href="/compose" class="pub-btn btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
           <%} else {%>
-          <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
-          <li class="sidebar-nav"><a href="/users/login"> Dashboard</a> </li>
+            <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/users/login"> Dashboard</a> </li>
           <%}%>
           <li class="sidebar-nav"><a href="/community"> Community</a> </li>
           <li class="sidebar-nav"><a href="#">History</a> </li>
@@ -41,8 +41,10 @@
               </div>
               <ul class="nav navbar-nav navbar-right">
                 <% if (name!=null){%>
-                <li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=penName%>">HOME</a></li>
-                <%}%>
+                  <li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=penName%>">HOME</a></li>
+                <% } else { %>
+                  <li id="home" class="nav-item"><a class="nav-link" href="/users/login">HOME</a></li>
+                <% } %>  
                 <li id="about" class="nav-item"><a class="nav-link" href="/about">ABOUT US</a></li>
                 <li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a></li>
                 <li id="compose" class="nav-item"><a class="nav-link" href="/compose">CREATE</a></li>
@@ -59,28 +61,90 @@
           <div class="row">
             <div class="col-lg-12">
               <h1><%=title%></h1>
-              <h5>Last edited <%=_id.getTimestamp().toString().substring(0,3)%>,
-                <%=_id.getTimestamp().toString().substring(4,10)%></h5>
-              <% if ((new Date().toString().substring(0,16))==_id.getTimestamp().toString().substring(0,16)){%>
-              <h5><%=_id.getTimestamp().toString().substring(16,21)%> GMT</h5>
+              <% let today = new Date().toString() %>
+              <% let bStamp = _id.getTimestamp() %>
+              <% let bHour = bStamp.getHours() %>
+              <% let bMin = bStamp.getMinutes() %>
+              <% let bMonth = bStamp.getMonth() %>
+              <% let bDate = bStamp.getDate() %>
+              <% let bYear = bStamp.getFullYear() %>
+              <% let bDay = bStamp.getDay() %>
+              <% let meridian = "a.m" %>
+              <% let zero = false %>
+              <% const week = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] %>
+              <% const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
+              <% days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] %>
+              <% if ((bYear % 4 == 0 && bYear % 100 !=0) || bYear % 400 == 0){ %>
+                <% days[1] = 29 %>
+              <% } %>
+              <% let t_mins_ist = bHour * 60 + bMin + 330 %>
+              <% if (t_mins_ist > 1440){ %>
+                <% t_mins_ist = t_mins_ist - 1440 %>
+                <% bDate = bDate + 1 %>
+                <% bDay = bDay + 1 %>
+                <% if (bDay > 6){ %>
+                  <% bDay = bDay - 7 %>
+                <% } %>
+                <% if (bDate > days[bMonth]){ %>
+                  <% bDate = bDate - days[bMonth] %>
+                  <% bMonth = bMonth + 1 %>
+                  <% if (bMonth > 12){ %>
+                    <% bMonth = bMonth - 12 %>
+                    <% bYear = bYear + 1 %>
+                  <% } %>
+                <% } %>
+              <% } %>
+              <% bHour = Math.floor(t_mins_ist / 60) %>
+              <% bMin = t_mins_ist % 60 %>
+              <% if (bHour>11) { %>
+                <% meridian = 'p.m' %>
+              <% } %>
+              <% if (bHour>12){ %>
+                <% bHour = bHour - 12 %>
+              <% } %>
+              <% if (bHour==0){ %>
+                <% bHour = 12 %>
+              <% } %>
+              <% if (bMin<10){ %>
+                <% zero = true %>
+              <% } %>
+              <% if ((today.substring(0,15))==bStamp.toString().substring(0,15)){%>
+                <span class="">
+                  <% if (zero) { %>
+                    <p>Last edited at <%=bHour%>:0<%=bMin%> <%=meridian%></p>
+                  <% } else { %>
+                    <p>Last edited at <%=bHour%>:<%=bMin%> <%=meridian%></p>
+                  <% } %>
+                </span><br>
+              <%} else if ((today.substring(4,7)==bStamp.toString().substring(4,7))&&(parseInt(today.substring(8,10))-parseInt(bStamp.toString().substring(8,10))==1)&&(today.substring(11,15)==bStamp.toString().substring(11,15))) {%>
+                <span class="">
+                  <% if (zero){ %>
+                    <p>Edited yesterday at <%=bHour%>:0<%=bMin%> <%=meridian%> </p>
+                  <% } else { %>
+                    <p>Edited yesterday at <%=bHour%>:<%=bMin%> <%=meridian%> </p>
+                  <% } %>
+                </span><br>
+              <%} else {%>
+                <span class="">
+                  <p>Published on <%=week[bDay]%>, <%=month[bMonth]%> <%=bDate%></p>
+                </span><br>
               <%}%>
-              <br>
-              <div class="blogg1">
-                <p><%=body%></p>
+                <br>
+                <% if (Flag){%>
+                  <a href="/edit/<%= _id %>">Edit Blog</a>
+                  <a href="/delete/<%= _id %>">Delete Blog</a>
+                <%}%>
+                <div class="blogg1">
+                  <textarea name="" id="postbg" cols="180" rows="1000" disabled><%=body%></textarea>
               </div>
-              <% if (Flag){%>
-                <a href="/edit/<%= _id %>">Edit Blog</a>
-                <a href="/delete/<%= _id %>">Delete Blog</a>
-              <%}%>
             </div>
           </div>
         </div>
       </div>
-
-
       <%- include("partials/sidebar"); -%>
     </div>
   </div>
+</body>
 
   <!-- Menu Toggle JS-->
   <script src="/js/sidebar.js"></script>
