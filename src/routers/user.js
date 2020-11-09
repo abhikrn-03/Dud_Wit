@@ -5,6 +5,19 @@ const Blog = require('../models/blog')
 const connectEnsureLogin = require('connect-ensure-login')
 const _ = require('lodash')
 const router = new express.Router()
+const multer = require('multer')
+
+const upload = multer({
+    dest: 'images', 
+    limits: {
+        fileSize: 255000
+    },
+    fileFilter(req, file, cb){
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+            return cb(new Error('Please upload png, jpg or jpeg file.'))
+        }
+    }
+})
 
 let blogs = []
 
@@ -92,6 +105,14 @@ router.get('/users/logout', connectEnsureLogin.ensureLoggedIn('/users/login'), (
     res.redirect('/')
 })
 
+// router.post('/users/addAvatar', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async (req, res) => {
+//     req.user.avatar = req.file.buffer
+//     await req.user.save()
+//     res.send()
+// }, (error, req, res, next) => {
+//     res.status(400).send({error: error.message})
+// })
+
 router.get('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try {
         await res.render('setupProfile', {
@@ -138,7 +159,11 @@ router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login
     }
 })
 
-router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async(req, res) => {
+router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
+    if (req.file){
+        req.user.avatar = req.file.buffer
+        await req.user.save()
+    }
     _id = req.user._id
     reqBody = req.body
     if(reqBody.name){
@@ -163,6 +188,8 @@ router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/logi
         }
     }
     return res.redirect('/users/editProfile')
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message})
 })
 
 module.exports = router

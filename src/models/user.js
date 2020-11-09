@@ -56,6 +56,9 @@ const userSchema = mongoose.Schema({
     },
     google_id: {
         type: String
+    },
+    avatar: {
+        type: Buffer
     }
 })
 
