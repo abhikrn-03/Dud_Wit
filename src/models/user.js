@@ -39,11 +39,6 @@ const userSchema = mongoose.Schema({
         type: String,
         trim: true,
         uppercase: true,
-        validate(value) {
-            if(value !== 'M' && value !== 'F' && value !== 'O'){
-                throw new Error("Invalid input for gender.")
-            }
-        }
     },
     age: {
         type: Number,
