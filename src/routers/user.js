@@ -164,12 +164,16 @@ router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login
 })
 
 router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
-    if (req.file){
-        req.user.avatar = req.file.buffer
-        await req.user.save()
-    }
+    console.log(req)
     _id = req.user._id
     reqBody = req.body
+    if(req.file){
+        try {
+            await User.findByIdAndUpdate(_id, { avatar: req.file.buffer} )
+        } catch (e) {
+            return res.status(400).send(e)
+        }
+    }
     if(reqBody.name){
         try{
             await User.findByIdAndUpdate(_id, { name: reqBody.name })
