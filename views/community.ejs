@@ -15,7 +15,7 @@
           <li class="sidebar-nav">
             <% if (name!=null){%>
             <li class="sidebar-nav"><a href="/compose" class="pub-btn"> Create A New Blog</a> </li>
-            <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
+            <li class="sidebar-nav"><a href="/users/<%=penName%>/profile"> Dashboard</a> </li>
             <%} else {%>
             <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
             <li class="sidebar-nav"><a href="/users/login"> Dashboard</a> </li>
@@ -42,7 +42,7 @@
       </div>
         <ul class="nav navbar-nav navbar-right">
           <% if (name!=null){%>
-            <li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=penName%>">HOME</a></li>
+            <li id="home" class="nav-item"><a class="nav-link" href="/users/<%=penName%>/profile">HOME</a></li>
           <%}%>
           <li id="about" class="nav-item"><a  class="nav-link" href="/about">ABOUT US</a></li>
           <li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a></li>

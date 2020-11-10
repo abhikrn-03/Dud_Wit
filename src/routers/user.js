@@ -34,7 +34,7 @@ var upload = multer({
 
 let blogs = []
 
-router.get('/profile/:penName', async (req, res) => {
+router.get('/users/:penName/profile/', async (req, res) => {
     const penName = req.params.penName
     blogs = await Blog.find({penName: penName})
     blogs.reverse()
@@ -94,14 +94,14 @@ router.get('/users/login', async (req, res) => {
 
 router.post('/users/signUp', passport.authenticate('local-signup', {}), async (req, res) => {
     try {
-        res.redirect('/profile/'+req.user.penName)
+        res.redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
 router.post('/users/signIn', passport.authenticate('local-login', {}), (req, res) => {
-    res.redirect('/profile/' + req.user.penName)
+    res.redirect('/users/'+req.user.penName+'/profile/')
 })
 
 router.get('/users/google', passport.authenticate('google-auth', {
@@ -111,7 +111,7 @@ router.get('/users/google', passport.authenticate('google-auth', {
 router.get('/auth/google/BlogBower', passport.authenticate('google-auth', {
 }), (req, res) => {
     if(req.user.penName){
-        return res.redirect('/profile/' + req.user.penName)
+        return res.redirect('/users/'+req.user.penName+'/profile/')
     }
     res.redirect('/users/setupProfile')
 })
@@ -141,7 +141,7 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
         if(req.body.gender){
             await User.findByIdAndUpdate(req.user._id, { gender: req.body.gender })
         }
-        return res.redirect('/profile/' + req.body.penName)
+        return res.redirect('/users/'+req.user.penName+'/profile/')
     } catch(e) {
         if (e.codeName == 'DuplicateKey'){
             await res.render('setupProfile', {

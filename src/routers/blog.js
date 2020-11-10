@@ -60,15 +60,20 @@ router.post('/compose', connectEnsureLogin.ensureLoggedIn('/users/login'), async
     try {
         await blog.save()
         blogs = await Blog.find({})
-        res.status(201).redirect('/profile/'+req.user.penName)
+        res.status(201).redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.get('/edit/:id', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
+router.get('/edit/:blogger/:title/:blog_id', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try {
-        _id = req.params.id
+        if(req.user.penName != req.params.blogger){
+            return await res.render('404', {
+                name: 'Not Anyone'
+            })
+        }
+        _id = req.params.blog_id
         blog = await Blog.findById(_id)
         const blogTitle = blog.title
         const blogBody = blog.body
@@ -90,7 +95,7 @@ router.get('/delete/:id', connectEnsureLogin.ensureLoggedIn('/users/login'), asy
     try{
         _id = req.params.id
         await Blog.deleteOne({_id: _id})
-        res.redirect('/profile/'+req.user.penName)
+        res.redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
         res.status(400).send(e)
     }
@@ -127,7 +132,7 @@ router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
             return await res.render('post', {
                 title: blog.title,
                 body: blog.body,
-                _id: blog.id,
+                _id: blog._id,
                 blogger: blog.penName,
                 penName: req.user.penName,
                 name: req.user.name,
