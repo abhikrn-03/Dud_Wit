@@ -141,7 +141,7 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
         if(req.body.gender){
             await User.findByIdAndUpdate(req.user._id, { gender: req.body.gender })
         }
-        return res.redirect('/users/'+req.user.penName+'/profile/')
+        return res.redirect('/users/'+req.body.penName+'/profile/')
     } catch(e) {
         if (e.codeName == 'DuplicateKey'){
             await res.render('setupProfile', {
