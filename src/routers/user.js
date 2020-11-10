@@ -153,7 +153,7 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
     }
 })
 
-router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
+router.get('/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try{
         const user = await User.findById(req.user._id)
         await res.render('editProfile',{
@@ -167,7 +167,7 @@ router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login
     }
 })
 
-router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
+router.post('/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
     _id = req.user._id
     reqBody = req.body
     if(req.file){
@@ -204,7 +204,7 @@ router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/logi
             return res.status(400).send(e)
         }
     }
-    return res.redirect('/users/editProfile')
+    return res.redirect('/:user/editProfile')
 }, (error, req, res, next) => {
     res.status(400).send({error: error.message})
 })
