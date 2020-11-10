@@ -101,6 +101,59 @@ router.get('/delete/:id', connectEnsureLogin.ensureLoggedIn('/users/login'), asy
     }
 })
 
+router.get('/search/:type/:query', async(req, res) => {
+    try {
+        const query = req.params.query.toLowerCase()
+        const keywords = query.split(" ")
+        var blogs = await Blog.find({})
+        if (req.params.type === 'byTags'){
+            var matches = blogs.filter((blog) => {
+                var tags = blog.tags
+                for (i = 0; i < keywords.length; i++){
+                    if (tags.includes(keywords[i])){
+                        return true
+                    }
+                }
+                return false
+            })
+        }
+        if (req.params.type === 'byTitle'){
+            var matches = blogs.filter((blog) => {
+                var title = blog.title
+                title = title.toLowerCase()
+                for (i = 0; i < keywords.length; i++){
+                    if (title.includes(keywords[i])){
+                        return true
+                    }
+                }
+                return false
+            })
+        }
+        if (req.user){
+            await res.render('community', {
+            title: 'They are something more than just blogs..',
+            penName: req.user.penName,
+            name: req.user.name,
+            email: req.user.email,
+            Flag: true,
+            blogs: matches
+        })
+        }
+        else {
+            await res.render('community', {
+            title: 'They are something more than just blogs..',
+            name: null,
+            penName: null,
+            email: null,
+            Flag: true,
+            blogs: matches
+        })
+        } 
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
 router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
     _id = req.params.blog_id
     blog = await Blog.findById(_id)
