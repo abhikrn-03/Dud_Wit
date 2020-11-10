@@ -8,7 +8,7 @@ const router = new express.Router()
 const multer = require('multer')
 
 const upload = multer({
-    dest: 'images', 
+    dest: 'uploads/', 
     limits: {
         fileSize: 255000
     },
@@ -19,6 +19,17 @@ const upload = multer({
         cb(undefined, true)
     }
 })
+
+// var storage = multer.diskStorage({
+//     destination: function(req, file, cb){
+//         cb(null, 'uploads')
+//     },
+//     filename: function(req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now())
+//     }
+// })
+
+// var upload = multer({storage: storage})
 
 let blogs = []
 
@@ -151,6 +162,7 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
 
 router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try{
+        console.log('Yo')
         const user = await User.findById(req.user._id)
         await res.render('editProfile',{
             name: user.name,
@@ -164,7 +176,6 @@ router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login
 })
 
 router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
-    console.log(req)
     _id = req.user._id
     reqBody = req.body
     if(req.file){
