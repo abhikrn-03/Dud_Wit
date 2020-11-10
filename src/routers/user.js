@@ -10,7 +10,9 @@ const multer = require('multer')
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, 'uploads')
+        fs.mkdir('uploads', (err) => {
+            cb(null, 'uploads')
+        })
     },
     filename: function(req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now())
