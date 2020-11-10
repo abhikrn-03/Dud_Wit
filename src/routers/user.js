@@ -8,7 +8,7 @@ const router = new express.Router()
 const multer = require('multer')
 
 const upload = multer({
-    dest: 'uploads/', 
+    dest: 'images', 
     limits: {
         fileSize: 255000
     },
