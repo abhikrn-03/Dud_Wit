@@ -254,7 +254,7 @@ body{
 }
 
 #profileDp {
-    /* height: 100%; */
+    height: 100%;
 }
 
 .profileDetails {
@@ -263,4 +263,22 @@ body{
 
 .user-about img {
     width: 20%;
+}
+
+
+/*Button*/
+
+.eded{
+    background: linear-gradient(to left, #8591ca,#d89692);
+    color:black;
+    margin-right: 100px;
+    margin-bottom:20px;
+    padding: 5px 20px;
+    min-width:200px;
+    border:2px solid #8591ca;
+    border-radius: 20px;
+}
+
+a.eded:hover{
+    background-color: #8591ca !important;
 }
