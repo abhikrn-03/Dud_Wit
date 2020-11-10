@@ -186,28 +186,31 @@ body{
     width: 25%;
 }
 
-#blog-title {
+#blog-head {
     margin-left: 0.2%;
-    text-decoration: none;
-    color: #424242;
 }
 
-#blog-title :hover {
+#blog-title {
+    margin-left: 0.8%;
+    text-decoration: none;
+    color: #424242;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+#blog-head :hover {
     color: grey;
 }
 
 .blogg1{
+    font-family: 'Roboto Slab', serif;
+    font-weight: normal;
     color: #424242;
     font-size: medium;
 }
 
-.blog1 h1{
-    font-weight:bold;
-    letter-spacing: 4px;
-}
-
 .blogss h1{
-    font-weight:bold;
+    /* font-weight: 600; */
     letter-spacing: 10px;
     padding:10px;
 }
@@ -216,4 +219,48 @@ body{
     background-color: #eae7dc;
     border-color: #eae7dc;
     resize: none;
+}
+
+#menu-toggle{
+    border:none;
+    color:#2f4454;
+    background-color: #eae7dc;
+}
+
+/* User About Section */
+.user-about{
+    background: linear-gradient(to left, #6b5251,#d89692);
+    margin: 30px 20px;
+    padding:20px;
+    border-radius: 20px;
+    color: #eae7dc;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.7);
+    display: flex;
+}
+
+.user-about h3{
+    text-align: left;
+    font-weight: bold;
+    font-family: 'Pacifico', cursive;
+    padding-right: 40%;
+    font-weight: 300;
+}
+
+.user-about h5{
+    text-align: left;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+#profileDp {
+    /* height: 100%; */
+}
+
+.profileDetails {
+    padding-left: -50px;
+}
+
+.user-about img {
+    width: 20%;
 }

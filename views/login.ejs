@@ -23,7 +23,12 @@
 					<input class="emailin" type="text" name="penName" placeholder="PenName" required/>
 					<p>*cannot be changed later</p>
 					<input class="emailin" type="text" name="age" placeholder="Age" />
-					<input class="emailin" type="text" name="gender" placeholder="M/F/Other" />
+					<input class="emailin" type="text" list="genders" placeholder="SEX">
+					<datalist id="genders">
+						<option value="MALE">
+						<option value="FEMALE">
+						<option value="OTHER">
+					</datalist>
 					<button>Sign Up</button>
 				</form>
 			</div>

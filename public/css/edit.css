@@ -3,7 +3,7 @@
 }
 
 .prof{
-    padding-top:100px;
+    padding:100px 0;
     background: #eae7dc;
 	display: flex;
 	justify-content: center;
@@ -11,7 +11,7 @@
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
 	height: 100%;
-	margin: -20px 0 50px;
+	margin: 20px 50px;
 }
 
 .wrap{
@@ -23,8 +23,8 @@
 	overflow: hidden;
 	width: 868px;
 	max-width: 150%;
-	min-height: 800px;
-	padding-top: 20px;
+	min-height: 700px;
+	padding: 20px 0 200px 0;
 }
 
 .wrap1{
@@ -36,12 +36,11 @@
 	overflow: hidden;
 	width: 868px;
 	max-width: 150%;
-	min-height: 400px;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	min-height: 500px;
+	padding: 20px 0 120px 0;
 }
 
-form{
+.wrap1 form{
     background: linear-gradient(to right, #2f4454,#9b3a33);
 	display: flex;
 	color:#eee;
@@ -49,6 +48,18 @@ form{
 	justify-content: center;
 	flex-direction: column;
 	padding: 50px 50px 0 50px;
+	height: 100%;
+	text-align: center;
+}
+
+.wrap form{
+	background: linear-gradient(to right, #2f4454,#9b3a33);
+	display: flex;
+	color:#eee;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
 	height: 100%;
 	text-align: center;
 }
