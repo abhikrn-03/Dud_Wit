@@ -1,3 +1,4 @@
+const fs = require('fs')
 const express = require('express')
 const passport = require('passport')
 const User = require('../models/user')
@@ -7,29 +8,27 @@ const _ = require('lodash')
 const router = new express.Router()
 const multer = require('multer')
 
-const upload = multer({
-    dest: 'images', 
+var storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'uploads')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+})
+
+var upload = multer({
+    storage: storage,
     limits: {
         fileSize: 255000
     },
-    fileFilter(req, file, cb){
-        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+    fileFilter(req, file, cb) {
+        if(!file.originalname.match(/\.(jpeg|jpg|png)$/)){
             return cb(new Error('Please upload png, jpg or jpeg file.'))
         }
         cb(undefined, true)
     }
 })
-
-// var storage = multer.diskStorage({
-//     destination: function(req, file, cb){
-//         cb(null, 'uploads')
-//     },
-//     filename: function(req, file, cb) {
-//         cb(null, file.fieldname + '-' + Date.now())
-//     }
-// })
-
-// var upload = multer({storage: storage})
 
 let blogs = []
 
@@ -120,14 +119,6 @@ router.get('/users/logout', connectEnsureLogin.ensureLoggedIn('/users/login'), (
     res.redirect('/')
 })
 
-// router.post('/users/addAvatar', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async (req, res) => {
-//     req.user.avatar = req.file.buffer
-//     await req.user.save()
-//     res.send()
-// }, (error, req, res, next) => {
-//     res.status(400).send({error: error.message})
-// })
-
 router.get('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try {
         await res.render('setupProfile', {
@@ -162,7 +153,6 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
 
 router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try{
-        console.log('Yo')
         const user = await User.findById(req.user._id)
         await res.render('editProfile',{
             name: user.name,
@@ -180,7 +170,13 @@ router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/logi
     reqBody = req.body
     if(req.file){
         try {
-            await User.findByIdAndUpdate(_id, { avatar: req.file.buffer} )
+            var img = fs.readFileSync(req.file.path)
+            var encode_img = img.toString('base64')
+            var finalImg = {
+                contentType: req.file.mimetype,
+                image: Buffer.from(encode_img, 'base64')
+            }
+            await User.findByIdAndUpdate(_id, { avatar: finalImg})
         } catch (e) {
             return res.status(400).send(e)
         }

@@ -38,12 +38,7 @@ const userSchema = mongoose.Schema({
     gender: {
         type: String,
         trim: true,
-        uppercase: true,
-        validate(value) {
-            if(value !== 'M' && value !== 'F' && value !== 'O'){
-                throw new Error("Invalid input for gender.")
-            }
-        }
+        uppercase: true
     },
     age: {
         type: Number,
@@ -58,7 +53,8 @@ const userSchema = mongoose.Schema({
         type: String
     },
     avatar: {
-        type: Buffer
+        image: Buffer,
+        contentType: String
     }, 
     about: {
         type: String,
