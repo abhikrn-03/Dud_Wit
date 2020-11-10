@@ -13,7 +13,7 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <% if (name!=null){%>
-            <li class="sidebar-nav"><a href="/compose" class="pub-btn btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/compose" class="pub-btn"> Create A New Blog</a> </li>
             <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
           <%} else {%>
             <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
@@ -36,7 +36,7 @@
           <nav class="navbar navbar-default">
             <div class="cont">
               <div class="navbar-header">
-                <p class="navbar-brand"><a href="#" id="menu-toggle"><i class="fa fa-fw fa-align-justify"></i></a></p>
+                <p class="navbar-brand"><button id="menu-toggle"><i class="fas fa-hamburger"></i></button></p>
                 <p class="navbar-brand"><a href="/">B L O G B O W E R</a></p>
               </div>
               <ul class="nav navbar-nav navbar-right">
@@ -45,8 +45,7 @@
                 <% } else { %>
                   <li id="home" class="nav-item"><a class="nav-link" href="/users/login">HOME</a></li>
                 <% } %>  
-                <li id="about" class="nav-item"><a class="nav-link" href="/about">ABOUT US</a></li>
-                <li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a></li>
+                <li id="about" class="nav-item"><a class="nav-link" href="/#follow">ABOUT US</a></li>
                 <li id="compose" class="nav-item"><a class="nav-link" href="/compose">CREATE</a></li>
                 <li class="nav-item"><a id="menu-toggle-rt" class="nav-link" href="#"><i
                       class="fa fa-fw fa-user"></i></a></li>
@@ -148,5 +147,5 @@
 
   <!-- Menu Toggle JS-->
   <script src="/js/sidebar.js"></script>
-  <!--<%- include("partials/footer1"); -%> -->
+  <%- include("partials/footer1"); -%>
 

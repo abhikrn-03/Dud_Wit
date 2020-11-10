@@ -1,33 +1,3 @@
-<!--<%- include("partials/header1"); -%>
-<link rel="stylesheet" href="/css/home.css">
-
-
-<div class="blogss">
-
-
-    <h1 class=>Community</h1>
-    <h2> <%= title %> </h2>
-
-    <%  blogs.forEach(function(blog){ %>
-
-    <div class="blog1">
-    
-    <h1><%=blog.title%></h1>
-    <p class="blogg1">
-        <%=blog.body.substring(0, 100) + " ..."%>
-        <a href="/blogs/<%=blog.title%>">Read More</a>
-    </p>
-</div>
-    <br>
-    <br>
-    <% }) %>
-</div>
-
-
-<%- include("partials/footer1"); -%>
--->
-
-
 <%- include("partials/header1"); -%>
 
 <link rel="stylesheet" href="/css/home.css">
@@ -44,7 +14,7 @@
         <ul class="sidebar-nav">
           <li class="sidebar-nav">
             <% if (name!=null){%>
-            <li class="sidebar-nav"><a href="/compose" class="pub-btn btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/compose" class="pub-btn"> Create A New Blog</a> </li>
             <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
             <%} else {%>
             <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
@@ -67,7 +37,7 @@
   <nav class="navbar navbar-default">
     <div class="cont">
       <div class="navbar-header">
-        <p class="navbar-brand"><a href="#" id="menu-toggle"><i class="fa fa-fw fa-align-justify"></i></a></p>
+        <p class="navbar-brand"><button id="menu-toggle"><i class="fas fa-hamburger"></i></button></p>
         <p class="navbar-brand">B L O G B O W E R</p>
       </div>
         <ul class="nav navbar-nav navbar-right">
@@ -102,22 +72,10 @@
 
 
     <%- include("partials/sidebar"); -%>
-    <!-- <div id="sidebar-wrapper-rt">
-      <ul class="sidebar-nav-rt">
-        <li class="sidebar-nav-rt">USER</li>
-        <li class="sidebar-nav-rt">User Picture </li>
-        <li class="sidebar-nav-rt"><%=name%></li>
-        <li class="sidebar-nav-rt">User Penname AGE</li>
-        <li class="sidebar-nav-rt">User AGE</li>
-        <li class="sidebar-nav-rt btn pub-btn"><a href="/users/editProfile"> EDIT Profile</a> </li>
-        <li class="sidebar-nav-rt btn pub-btn"><a href="/users/logout"> sign out</a> </li>
-      </ul>
-
-    </div> -->
 
 </div>
 </div>
 
 <!-- Menu Toggle JS-->
 <script src="/js/sidebar.js"></script>
-<!-- <%- include("partials/footer1"); -%> -->
+<%- include("partials/footer1"); -%>

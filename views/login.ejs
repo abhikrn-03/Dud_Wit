@@ -32,9 +32,9 @@
 		<form action="/users/signUp" method="post">
 			<h1>Create Account</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fa fa-fw fa-facebook"></i></a>
-				<a href="/users/google" class="social"><i class="fa fa-fw fa-google"></i></a>
-				<a href="#" class="social"><i class="fa fa-fw fa-twitter"></i></a>
+				<!-- <a href="#" class="social"><i class="far fa-eye"></i></a> -->
+				<a href="/users/google" class="social"><i class="fab fa-google"></i></a>
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 			</div>
 			<span>or use your email for registration</span>
 			<input class="emailin" type="text" name="name" placeholder="Name" required/>
@@ -51,14 +51,14 @@
 		<form action="/users/signIn" method="post">
 			<h1>Sign in</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fa fa-fw fa-facebook"></i></a>
-				<a href="/users/google" class="social"><i class="fa fa-fw fa-google"></i></a>
-				<a href="#" class="social"><i class="fa fa-fw fa-twitter"></i></a>
+				<!-- <a href="#" class="social"><i class="fa fa-fw fa-facebook"></i></a> -->
+				<a href="/users/google" class="social"><i class="fab fa-google"></i></a>
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 			</div>
 			<span>or use your account</span>
 			<input class="emailin" type="text" name="penName" placeholder="Pen Name" />
-			<input class="emailin" type="password" name="password" placeholder="Password" />
-			<a href="#">Forgot your password?</a>
+			<input class="emailin" type="password" name="password" placeholder="Password" /><br>
+			<!-- <a href="#">Forgot your password?</a> -->
 			<button>Sign In</button>
 		</form>
 	</div>
@@ -80,5 +80,5 @@
 </div>
 
 <script src="/js/log.js"></script>
-<!-- <%- include("partials/footer1"); -%> -->
+<%- include("partials/footer1"); -%>
 
