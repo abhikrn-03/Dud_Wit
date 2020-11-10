@@ -4,61 +4,41 @@
 </head>
 
 <body>
-
-
-	      <!-- NavBar -->
-<!-- <div class="cont"> -->
-	<!-- <nav class="navbar navbar-default">
-	  <div class="cont">
-		<div class="navbar-header">
-		  <p class="navbar-brand">B L O G B O W E R</p>
-		</div>
-		  <ul class="nav navbar-nav navbar-right">
-			<li id="home" class="nav-item"><a class="nav-link" href="/profile/<%=name%>">HOME</a></li>
-			<li id="about" class="nav-item"><a  class="nav-link" href="/about">ABOUT US</a></li>
-			<li id="contact" class="nav-item"><a class="nav-link" href="/contact">CONTACT US</a></li>
-			<li id="compose" class="nav-item"><a class="nav-link" href="/community">community</a></li>
-			<li id="compose" class="nav-item"><a class="nav-link" href="/compose">CREATE</a></li>
-		  </ul>
-	  </div>
-	</nav> -->
-	<!-- </div> -->
-
-
 	<div class="logey">
-<h2>BLOGBOWER Get Going!</h2>
-<div class="container1" id="container1">
-	<div class="form-container sign-up-container">
-		<form action="/users/signUp" method="post">
-			<h1>Create Account</h1>
-			<div class="social-container">
-				<a href="#" class="social"><i class="fa fa-fw fa-facebook"></i></a>
-				<a href="/users/google" class="social"><i class="fa fa-fw fa-google"></i></a>
-				<a href="#" class="social"><i class="fa fa-fw fa-twitter"></i></a>
+		<h2>BLOGBOWER Get Going!</h2>
+		<div class="container1" id="container1">
+			<div class="form-container sign-up-container">
+				<form action="/users/signUp" method="post">
+					<h1>Create Account</h1>
+					<div class="social-container">
+						<!-- <a href="#" class="social"><i class="far fa-eye"></i></a> -->
+						<a href="/users/google" class="social"><i class="fab fa-google"></i></a>
+						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+					</div>
+					<span>or use your email for registration</span>
+					<input class="emailin" type="text" name="name" placeholder="Name" required/>
+					<input class="emailin" type="email" name="email" placeholder="Email" required/>
+					<input class="emailin pass" type="password" name="password" placeholder="Password" required/>
+					<i class="passview far fa-eye-slash"></i>
+					<input class="emailin" type="text" name="penName" placeholder="PenName" required/>
+					<p>*cannot be changed later</p>
+					<input class="emailin" type="text" name="age" placeholder="Age" />
+					<input class="emailin" type="text" name="gender" placeholder="M/F/Other" />
+					<button>Sign Up</button>
+				</form>
 			</div>
-			<span>or use your email for registration</span>
-			<input class="emailin" type="text" name="name" placeholder="Name" required/>
-			<input class="emailin" type="email" name="email" placeholder="Email" required/>
-			<input class="emailin" type="password" name="password" placeholder="Password" required/>
-			<input class="emailin" type="text" name="penName" placeholder="PenName" required/>
-			<p>*cannot be changed later</p>
-			<input class="emailin" type="text" name="age" placeholder="Age" />
-            <input class="emailin" type="text" name="gender" placeholder="M/F/Other" />
-			<button>Sign Up</button>
-		</form>
-	</div>
-	<div class="form-container sign-in-container">
-		<form action="/users/signIn" method="post">
+			<div class="form-container sign-in-container">
+			<form action="/users/signIn" method="post">
 			<h1>Sign in</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fa fa-fw fa-facebook"></i></a>
-				<a href="/users/google" class="social"><i class="fa fa-fw fa-google"></i></a>
-				<a href="#" class="social"><i class="fa fa-fw fa-twitter"></i></a>
+				<!-- <a href="#" class="social"><i class="fa fa-fw fa-facebook"></i></a> -->
+				<a href="/users/google" class="social"><i class="fab fa-google"></i></a>
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 			</div>
 			<span>or use your account</span>
 			<input class="emailin" type="text" name="penName" placeholder="Pen Name" />
-			<input class="emailin" type="password" name="password" placeholder="Password" />
-			<a href="#">Forgot your password?</a>
+			<input class="emailin pass" type="password" name="password" placeholder="Password" /><i class="passview far fa-eye-slash"></i><br>
+			<!-- <a href="#">Forgot your password?</a> -->
 			<button>Sign In</button>
 		</form>
 	</div>
@@ -80,5 +60,4 @@
 </div>
 
 <script src="/js/log.js"></script>
-<!-- <%- include("partials/footer1"); -%> -->
-
+<%- include("partials/footer1"); -%>
