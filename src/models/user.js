@@ -38,7 +38,7 @@ const userSchema = mongoose.Schema({
     gender: {
         type: String,
         trim: true,
-        uppercase: true,
+        uppercase: true
     },
     age: {
         type: Number,
@@ -51,6 +51,14 @@ const userSchema = mongoose.Schema({
     },
     google_id: {
         type: String
+    },
+    avatar: {
+        image: Buffer,
+        contentType: String
+    }, 
+    about: {
+        type: String,
+        trim: true
     }
 })
 

@@ -1,3 +1,4 @@
+const fs = require('fs')
 const express = require('express')
 const passport = require('passport')
 const User = require('../models/user')
@@ -5,6 +6,31 @@ const Blog = require('../models/blog')
 const connectEnsureLogin = require('connect-ensure-login')
 const _ = require('lodash')
 const router = new express.Router()
+const multer = require('multer')
+
+var storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        fs.mkdir('uploads', (err) => {
+            cb(null, 'uploads')
+        })
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+})
+
+var upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 255000
+    },
+    fileFilter(req, file, cb) {
+        if(!file.originalname.match(/\.(jpeg|jpg|png)$/)){
+            return cb(new Error('Please upload png, jpg or jpeg file.'))
+        }
+        cb(undefined, true)
+    }
+})
 
 let blogs = []
 
@@ -141,9 +167,22 @@ router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login
     }
 })
 
-router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async(req, res) => {
+router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
     _id = req.user._id
     reqBody = req.body
+    if(req.file){
+        try {
+            var img = fs.readFileSync(req.file.path)
+            var encode_img = img.toString('base64')
+            var finalImg = {
+                contentType: req.file.mimetype,
+                image: Buffer.from(encode_img, 'base64')
+            }
+            await User.findByIdAndUpdate(_id, { avatar: finalImg})
+        } catch (e) {
+            return res.status(400).send(e)
+        }
+    }
     if(reqBody.name){
         try{
             await User.findByIdAndUpdate(_id, { name: reqBody.name })
@@ -166,6 +205,8 @@ router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/logi
         }
     }
     return res.redirect('/users/editProfile')
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message})
 })
 
 module.exports = router
