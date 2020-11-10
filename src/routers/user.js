@@ -173,10 +173,9 @@ router.post('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/user
     if(req.file){
         try {
             var img = fs.readFileSync(req.file.path)
-            var encode_img = img.toString('base64')
             var finalImg = {
                 contentType: req.file.mimetype,
-                image: Buffer.from(encode_img, 'base64')
+                image: img
             }
             await User.findByIdAndUpdate(_id, { avatar: finalImg})
         } catch (e) {
