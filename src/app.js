@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require("express")
+const fetch = require('node-fetch')
 const dotenv = require('dotenv')
 dotenv.config()
 const passport = require('passport')
@@ -17,6 +18,8 @@ const expressSession = require('express-session')({
 })
 const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const app = express()
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -86,6 +89,9 @@ passport.use('local-login', new LocalStrategy({
             return done(null, false, {message: 'Incorrect Pen Name or Password'})
         if (!user.validPassword(password))
             return done(null, false, {message: 'Incorrect Pen Name or Password'});
+        // if (!user.verified){
+        //     await fetch()
+        // }
         return done(null, user);
     });
 }));

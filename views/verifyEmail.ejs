@@ -1,0 +1,21 @@
+<head>
+    <link rel="stylesheet" href="/css/edit.css">
+    <link rel="icon" href="/images/favicon.png">
+</head>
+
+<body>
+
+    <div class="prof">
+<div class="wrap">
+<h2>Please enter the verification code sent to your email id.</h2>
+
+<form action="/users/verifyEmail" method="post">
+    <input type="text" name="verificationCode" placeholder="Verification Code" required/><br>
+    <p><%=message%></p>
+    <button>Submit</button>
+</form>
+</div>
+</div>
+
+</body>
+<%- include("partials/footer1"); -%>

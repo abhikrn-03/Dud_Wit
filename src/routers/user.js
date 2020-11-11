@@ -1,4 +1,7 @@
 const fs = require('fs')
+const fetch = require('node-fetch')
+const RandomOrg = require('random-org')
+var random = new RandomOrg({apiKey: process.env.RANDOM_API_KEY})
 const express = require('express')
 const passport = require('passport')
 const User = require('../models/user')
@@ -7,6 +10,8 @@ const connectEnsureLogin = require('connect-ensure-login')
 const _ = require('lodash')
 const router = new express.Router()
 const multer = require('multer')
+const { EDESTADDRREQ } = require('constants')
+const jwt = require('jsonwebtoken')
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -34,7 +39,7 @@ var upload = multer({
 
 let blogs = []
 
-router.get('/profile/:penName', async (req, res) => {
+router.get('/users/:penName/profile/', async (req, res) => {
     const penName = req.params.penName
     blogs = await Blog.find({penName: penName})
     blogs.reverse()
@@ -106,14 +111,14 @@ router.get('/users/login', async (req, res) => {
 
 router.post('/users/signUp', passport.authenticate('local-signup', {}), async (req, res) => {
     try {
-        res.redirect('/profile/'+req.user.penName)
+        res.redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
 router.post('/users/signIn', passport.authenticate('local-login', {}), (req, res) => {
-    res.redirect('/profile/' + req.user.penName)
+    res.redirect('/users/'+req.user.penName+'/profile/')
 })
 
 router.get('/users/google', passport.authenticate('google-auth', {
@@ -123,7 +128,7 @@ router.get('/users/google', passport.authenticate('google-auth', {
 router.get('/auth/google/BlogBower', passport.authenticate('google-auth', {
 }), (req, res) => {
     if(req.user.penName){
-        return res.redirect('/profile/' + req.user.penName)
+        return res.redirect('/users/'+req.user.penName+'/profile/')
     }
     res.redirect('/users/setupProfile')
 })
@@ -131,6 +136,20 @@ router.get('/auth/google/BlogBower', passport.authenticate('google-auth', {
 router.get('/users/logout', connectEnsureLogin.ensureLoggedIn('/users/login'), (req, res) => {
     req.logout()
     res.redirect('/')
+})
+
+router.post('/users/delete/', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
+    try {
+        const penName = req.body.penName
+        if (penName == req.user.penName) {
+            await Blog.deleteMany({penName: penName})
+            req.logout()
+            await User.deleteOne({penName: penName})
+            return res.status(200).send()
+        }
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
 router.get('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
@@ -153,7 +172,7 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
         if(req.body.gender){
             await User.findByIdAndUpdate(req.user._id, { gender: req.body.gender })
         }
-        return res.redirect('/profile/' + req.body.penName)
+        return res.redirect('/users/'+req.body.penName+'/profile/')
     } catch(e) {
         if (e.codeName == 'DuplicateKey'){
             await res.render('setupProfile', {
@@ -165,7 +184,21 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
     }
 })
 
-router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
+// router.get('/users/verifyEmail', async (req, res) => {
+//     try {
+//         params = {n: 1, length: 16, characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}
+//         const getVerificationKey = await random.generateStrings(params)
+//         const verficationKey = getVerificationKey.random.data[0]
+//         const token = jwt.sign({key: verficationKey}, process.env.SECRET)
+//     }
+// })
+
+// router.post('/users/verifyEmail', async (req, res) => {
+
+// })
+
+
+router.get('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try{
         const user = await User.findById(req.user._id)
         await res.render('editProfile',{
@@ -179,16 +212,15 @@ router.get('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login
     }
 })
 
-router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
+router.post('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), upload.single('avatar'), async(req, res) => {
     _id = req.user._id
     reqBody = req.body
     if(req.file){
         try {
             var img = fs.readFileSync(req.file.path)
-            var encode_img = img.toString('base64')
             var finalImg = {
                 contentType: req.file.mimetype,
-                image: Buffer.from(encode_img, 'base64')
+                image: img
             }
             await User.findByIdAndUpdate(_id, { avatar: finalImg})
         } catch (e) {
@@ -216,7 +248,7 @@ router.post('/users/editProfile', connectEnsureLogin.ensureLoggedIn('/users/logi
             return res.status(400).send(e)
         }
     }
-    return res.redirect('/users/editProfile')
+    return res.redirect('/users/'+req.user.penName+'/editProfile')
 }, (error, req, res, next) => {
     res.status(400).send({error: error.message})
 })

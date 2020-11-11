@@ -60,15 +60,20 @@ router.post('/compose', connectEnsureLogin.ensureLoggedIn('/users/login'), async
     try {
         await blog.save()
         blogs = await Blog.find({})
-        res.status(201).redirect('/profile/'+req.user.penName)
+        res.status(201).redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.get('/edit/:id', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
+router.get('/edit/:blogger/:title/:blog_id', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try {
-        _id = req.params.id
+        if(req.user.penName != req.params.blogger){
+            return await res.render('404', {
+                name: 'Not Anyone'
+            })
+        }
+        _id = req.params.blog_id
         blog = await Blog.findById(_id)
         const blogTitle = blog.title
         const blogBody = blog.body
@@ -90,70 +95,118 @@ router.get('/delete/:id', connectEnsureLogin.ensureLoggedIn('/users/login'), asy
     try{
         _id = req.params.id
         await Blog.deleteOne({_id: _id})
-        res.redirect('/profile/'+req.user.penName)
+        res.redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.get('/blogs/:blogName', async (req, res) => {
-    let flag = false
-    blogs = await Blog.find({})
-    const requestedTitle = _.lowerCase(req.params.blogName)
-
+router.get('/search/:type/:query', async(req, res) => {
     try {
-        blogs.forEach(async (blog) => {
-            const storedTitle = _.lowerCase(blog.title)
-
-            try {
-                if (storedTitle === requestedTitle) {
-                    flag = true
-                    if (req.user==undefined){
-                        await res.render('post', {
-                        title: blog.title,
-                        body: blog.body,
-                        _id: blog._id,
-                        penName: null,
-                        name: null,
-                        email: null,
-                        Flag: false
-                        })
-                    }
-                    else if ((req.user)&&(req.user.penName==blog.penName)){
-                        await res.render('post', {
-                        title: blog.title,
-                        body: blog.body,
-                        _id: blog._id,
-                        penName: req.user.penName,
-                        name: req.user.name,
-                        email: req.user.email,
-                        Flag: true
-                        })
-                    }
-                    else {
-                        await res.render('post', {
-                        title: blog.title,
-                        body: blog.body,
-                        _id: blog._id,
-                        penName: req.user.penName,
-                        name: req.user.name,
-                        email: req.user.email,
-                        Flag: false
-                        })
+        const query = req.params.query.toLowerCase()
+        const keywords = query.split(" ")
+        var blogs = await Blog.find({})
+        if (req.params.type === 'byTags'){
+            var matches = blogs.filter((blog) => {
+                var tags = blog.tags
+                for (i = 0; i < keywords.length; i++){
+                    if (tags.includes(keywords[i])){
+                        return true
                     }
                 }
-            } catch (e) {
-                res.status(500).send(e)
-            }
+                return false
+            })
+        }
+        if (req.params.type === 'byTitle'){
+            var matches = blogs.filter((blog) => {
+                var title = blog.title
+                title = title.toLowerCase()
+                for (i = 0; i < keywords.length; i++){
+                    if (title.includes(keywords[i])){
+                        return true
+                    }
+                }
+                return false
+            })
+        }
+        if (req.user){
+            await res.render('community', {
+            title: 'They are something more than just blogs..',
+            penName: req.user.penName,
+            name: req.user.name,
+            email: req.user.email,
+            Flag: true,
+            blogs: matches
         })
-        if (!flag){
-            await res.render('404', {
-            errorMessage: "Sorry, we could not find the Blog you've requested.",
+        }
+        else {
+            await res.render('community', {
+            title: 'They are something more than just blogs..',
+            name: null,
+            penName: null,
+            email: null,
+            Flag: true,
+            blogs: matches
+        })
+        } 
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
+    _id = req.params.blog_id
+    blog = await Blog.findById(_id)
+    if (!blog) {
+        await res.render('404', {
             name: 'Not Anyone'
+        })
+    }
+    if (blog.penName != req.params.user && blog.title != req.params.blogName){
+        await res.render('404', {
+            name: 'Not Anyone'
+        })
+    }
+
+    try {
+        if(req.user == undefined){
+            return await res.render('post', {
+                title: blog.title,
+                body: blog.body,
+                _id: blog._id,
+                blogger: blog.penName,
+                penName: null,
+                name: null,
+                email: null,
+                Flag: false,
+            })
+        }
+        else if ((req.user) && (req.user.penName == blog.penName)){
+            return await res.render('post', {
+                title: blog.title,
+                body: blog.body,
+                _id: blog._id,
+                blogger: blog.penName,
+                penName: req.user.penName,
+                name: req.user.name,
+                email: req.user.email,
+                Flag: true
+            })
+        }
+        else {
+            return await res.render('post', {
+                title: blog.title,
+                body: blog.body,
+                _id: blog._id,
+                blogger: blog.penName,
+                penName: req.user.penName,
+                name: req.user.name,
+                email: req.user.email,
+                Flag: false
             })
         }
     } catch (e) {
-        res.status(404).send(e)
+        res.status(500).send(e)
     }
 })
 

@@ -13,7 +13,10 @@ const Blog = mongoose.model('Blog', {
     penName: {
         type: String,
         required: true
-    }
+    },
+    tags: [{
+        type: String
+    }]
 })
 
 module.exports = Blog

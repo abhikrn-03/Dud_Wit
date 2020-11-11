@@ -8,7 +8,7 @@
 <div class="prof">
 <div class="wrap1">
 <h1>Edit Profile</h1>
-<form action="/users/editProfile" method="post" enctype="multipart/form-data">
+<form action="/users/<%=penName%>/editProfile" method="post" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="Name: <%= name %>" />
     <input type="text" name="age" placeholder="Age: <%= age %>" />
     <input class="emailin" type="text" list="genders" placeholder="SEX: <%=gender%>">
@@ -22,7 +22,16 @@
     <input type="file" name="avatar"/>
     <br>
     <button>Apply Changes</button>
+    <br>
+    <br>
 </form>
+<p id="penName" style="visibility: hidden"><%=penName%></p>
+<p id="message">Yo</p>
+<form action="", id="deleteForm">
+    <input type="text", placeholder="Enter your Pen Name to confirm the deletion of your account.", id="confirm" />
+    <button>Delete Account</button>
+</form>
+<script src="/js/deleteAcc.js" data-="<%=penName%>"></script>
 </div>
 </div>
 </body>

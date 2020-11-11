@@ -59,6 +59,10 @@ const userSchema = mongoose.Schema({
     about: {
         type: String,
         trim: true
+    },
+    verified: {
+        type: Boolean,
+        default: false
     }
 })
 
