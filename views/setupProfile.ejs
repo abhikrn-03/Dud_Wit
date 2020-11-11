@@ -14,7 +14,12 @@
     <input type="text" name="penName" placeholder="Pen Name" required/><br>
     <p>Cannot be changed later</p>
     <input type="text" name="age" placeholder="Age" /><br>
-    <input type="text" name="gender" placeholder="M/F/O" /><br>
+    <input class="emailin" type="text" list="genders" placeholder="SEX">
+    <datalist id="genders">
+        <option value="MALE">
+        <option value="FEMALE">
+        <option value="OTHER">
+    </datalist><br>
 
     <p><%=message%></p>
     <button>Submit</button>

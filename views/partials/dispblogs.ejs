@@ -49,7 +49,7 @@
         <% if (bMin<10){ %>
             <% zero = true %>
         <% } %>
-        <h1><%=blog.title%></h1>
+        <h2 id="blog-title"><%=blog.title%></h2>
         <% if ((today.substring(0,15))==bStamp.toString().substring(0,15)){%>
             <span class="date">
             <% if (zero) { %>

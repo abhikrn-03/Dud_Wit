@@ -13,10 +13,10 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <% if (name!=null){%>
-            <li class="sidebar-nav"><a href="/compose" class="pub-btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/compose" class="pub-btn"> <i class="fas fa-plus"></i> New Blog</a> </li>
             <li class="sidebar-nav"><a href="/users/<%=penName%>/profile"> Dashboard</a> </li>
           <%} else {%>
-            <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> <i class="fas fa-plus"></i> New Blog</a> </li>
             <li class="sidebar-nav"><a href="/users/login"> Dashboard</a> </li>
           <%}%>
           <li class="sidebar-nav"><a href="/community"> Community</a> </li>
@@ -53,7 +53,8 @@
             </div>
           </nav>
         </div>
-
+        <!-- <input type="text" value="Hello" id="myInput" disabled>
+        <button id="copy">Copy text</button> -->
 
         <!--Content-->
         <div class="container-fluid">
@@ -130,8 +131,8 @@
               <%}%>
                 <br>
                 <% if (Flag){%>
-                  <a href="/edit/<%=blogger%>/<%=title%>/<%= _id %>">Edit Blog</a>
-                  <a href="/delete/<%= _id %>">Delete Blog</a>
+                  <a class="btn eded" href="/edit/<%=blogger%>/<%=title%>/<%= _id %>"><i class="far fa-edit"></i></a>
+                  <a class="btn eded" href="/delete/<%= _id %>"><i class="fas fa-trash"></i></a>
                 <%}%>
                 <div class="blogg1">
                   <textarea name="" id="postbg" cols="180" rows="1000" disabled><%=body%></textarea>
@@ -146,6 +147,7 @@
 </body>
 
   <!-- Menu Toggle JS-->
+  <script src="/js/share.js"></script>
   <script src="/js/sidebar.js"></script>
   <%- include("partials/footer1"); -%>
 

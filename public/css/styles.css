@@ -23,15 +23,19 @@ body{
 
 /*CAROUSEL*/
 #gallery-carousel{
-  margin : 0 100px;
+  margin : 100px !important;
   box-shadow: 5px 10px 20px rgb(0,0,0);
-  text-align: center;
 }
 
-.wropper{
+.item img{
+  width:100% !important;
+  margin:0;
+}
+
+/*.wropper{
   justify-content: center;
   align-items: center;
-}
+}*/
 
 .carousel h1{
   font-weight:bold;
@@ -154,39 +158,39 @@ body{
   color:#ddd;
   font-weight:100;
   letter-spacing:1px;
-  padding:250px 10px 10px 20px;
+  padding:50px 10px 10px 20px;
 }
 #img2 h2{
   color:#ddd;
   font-weight:100;
   letter-spacing:1px;
-  padding:250px 10px 10px 20px;
+  padding:50px 10px 10px 20px;
 }
 #img3 h2{
   color:#ddd;
   font-weight:100;
   letter-spacing:1px;
-  padding:250px 10px 10px 20px;
+  padding:50px 10px 10px 20px;
 }
 
 #img1 p{
   padding: 0 0 0 20px;
-  color: rgb(160, 160, 160)
+  color: rgb(255, 255, 255);
 }
 #img2 p{
   padding: 0 0 0 20px;
-  color: rgb(255, 255, 255)
+  color: rgb(255, 255, 255);
 }
 #img3 p{
   padding: 0 0 0 20px;
-  color: rgb(255, 255, 255)
+  color: rgb(255, 255, 255);
 }
 
 
 /*CARDS SECTION 2*/
 #img4{
   height:400px;
-  min-width: 200px;;
+  min-width: 200px;
   background: url("/images/gf1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -209,22 +213,22 @@ body{
   box-shadow: 5px 10px 20px rgb(0,0,0);
 }
 #img4 h2{
-  color:black;
+  color:#ddd;
   font-weight:100;
   letter-spacing:1px;
-  padding:250px 10px 10px 20px;
+  padding:50px 10px 10px 20px;
 }
 #img5 h2{
-  color:rgb(0, 0, 0);
+  color:#ddd;
   font-weight:100;
   letter-spacing:1px;
-  padding:250px 10px 10px 20px;
+  padding:50px 10px 10px 20px;
 }
 #img6 h2{
-  color:black;
+  color:#ddd;
   font-weight:100;
   letter-spacing:1px;
-  padding:250px 10px 10px 20px;
+  padding:50px 10px 10px 20px;
 }
 
 #img4 p{
@@ -233,13 +237,21 @@ body{
 }
 #img5 p{
   padding: 0 0 0 20px;
-  color: rgb(32, 32, 32);
+  color: rgb(255, 255, 255);
 }
 #img6 p{
   padding: 0 0 0 20px;
-  color: rgb(61, 61, 61);
+  color: rgb(255, 255, 255);
 }
 
+/*Shadow Theme*/
+
+.shad{
+  top:50%;
+  height:50%;
+  position:relative;
+  background-color: rgba(0,0,0, 0.5);
+}
 
 
 /*Footer*/
@@ -270,13 +282,13 @@ body{
   flex:right;
 }
 .footer-icons a i{
-  color:pink;
+  color:#2f4454;
   padding: 0 50px;
   font-size:20px;
 }
 
 .footer-icons a i:hover{
-  color:#2f4454;
+  color:pink;
 }
 
 
