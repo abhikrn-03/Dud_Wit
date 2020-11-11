@@ -60,7 +60,8 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1><%=title%></h1>
+              <h1 id="postTitle"><%=title%></h1>
+              <h2 id="blogger"><%=blogger%></h2>
               <% let today = new Date().toString() %>
               <% let bStamp = _id.getTimestamp() %>
               <% let bHour = bStamp.getHours() %>
