@@ -13,7 +13,7 @@
       <!-- Sidebar Nav-->
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-          <li class="sidebar-nav"><a href="/compose" class="pub-btn"> Create A New Blog</a> </li>
+          <li class="sidebar-nav"><a href="/compose" class="pub-btn"> <i class="fas fa-plus"></i> New Blog</a> </li>
           <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
           <li class="sidebar-nav"><a href="/community"> Community</a> </li>
           <li class="sidebar-nav"><a href="#">History</a> </li>
@@ -45,10 +45,16 @@
         </nav>
     </div>
   
+    <!-- About profile -->
     <section class="user-about">
-      <h3>User_Name</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores expedita officiis temporibus! Esse, doloribus
-        aut.</p>
+      <div id="profileDp">
+        <img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="">
+      </div>
+      <div class="profileDetails">
+        <h3><%=proPen%></h3>
+        <h5><%=proName%>, <%=proAge%></h5>
+        <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores expedita officiis temporibus! Esse, doloribus aut.</h5>
+      </div>
     </section>
 
   <!--Content-->

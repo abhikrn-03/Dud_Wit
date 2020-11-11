@@ -45,7 +45,11 @@ router.get('/profile/:penName', async (req, res) => {
             title: 'Blogs',
             name: null,
             penName: null,
+            age: null,
             email: null,
+            proPen: user.penName,
+            proName: user.name,
+            proAge: user.age,
             Flag: false,
             blogs
             })
@@ -55,7 +59,11 @@ router.get('/profile/:penName', async (req, res) => {
             title: 'Blogs',
             penName: req.user.penName,
             name: req.user.name,
+            age: req.user.age,
             email: req.user.email,
+            proPen: user.penName,
+            proName: user.name,
+            proAge: user.age,
             Flag: false,
             blogs
             })
@@ -65,7 +73,11 @@ router.get('/profile/:penName', async (req, res) => {
             title: 'Blogs',
             penName: req.user.penName,
             name: req.user.name,
+            age: req.user.age,
             email: req.user.email,
+            proPen: user.penName,
+            proName: user.name,
+            proAge: user.age,
             Flag: false,
             blogs
             }) 

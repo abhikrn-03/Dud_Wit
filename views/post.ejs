@@ -13,10 +13,10 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <% if (name!=null){%>
-            <li class="sidebar-nav"><a href="/compose" class="pub-btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/compose" class="pub-btn"> <i class="fas fa-plus"></i> New Blog</a> </li>
             <li class="sidebar-nav"><a href="/profile/<%=penName%>"> Dashboard</a> </li>
           <%} else {%>
-            <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> Create A New Blog</a> </li>
+            <li class="sidebar-nav"><a href="/users/login" class="pub-btn btn"> <i class="fas fa-plus"></i> New Blog</a> </li>
             <li class="sidebar-nav"><a href="/users/login"> Dashboard</a> </li>
           <%}%>
           <li class="sidebar-nav"><a href="/community"> Community</a> </li>
@@ -131,8 +131,8 @@
               <%}%>
                 <br>
                 <% if (Flag){%>
-                  <a class="btn eded" href="/edit/<%= _id %>">Edit Blog</a>
-                  <a class="btn eded" href="/delete/<%= _id %>">Delete Blog</a>
+                  <a class="btn eded" href="/edit/<%= _id %>"><i class="far fa-edit"></i></a>
+                  <a class="btn eded" href="/delete/<%= _id %>"><i class="fas fa-trash"></i></a>
                 <%}%>
                 <div class="blogg1">
                   <textarea name="" id="postbg" cols="180" rows="1000" disabled><%=body%></textarea>

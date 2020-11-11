@@ -1,18 +1,22 @@
 <section id="sidebar-wrapper-rt">
     <ul class="sidebar-nav-rt">
         <% if (name!=null){%>
-            <li class="sidebar-nav-rt"><%=name%></li>
+            <li class="sidebar-nave-rt">Profile</li>
             <div id="profilePicture"></div>
+            <img class="sidepic" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="">
+            <li class="sidebar-nav-rt"><%=name%></li>
             <li class="sidebar-nav-rt"><%=penName%></li>
             <li class="sidebar-nav-rt"><%=email%></li>
-            <li class="sidebar-nav-rt">User AGE</li>
-            <li class="sidebar-nav-rt pub-btn"><a href="/users/editProfile"> EDIT Profile</a> </li>
+            <li class="sidebar-nav-rt"><%=age%></li>
+            <li class="sidebar-nav-rt pub-btn eded"><a href="/users/editProfile"> <i class="fas fa-user-edit"></i>Profile</a> </li>
             <br>
-            <li class="sidebar-nav-rt pub-btn"><a href="/users/logout">SIGN OUT</a> </li>
+            <li class="sidebar-nav-rt pub-btn eded"><a href="/users/logout">SIGN OUT <i class="fas fa-sign-out-alt"></i></a> </li>
             <li class="sidebar-nav-rt version"> v 1.0.3</li>
         <%} else {%>
+            <li class="sidebar-nave-rt">Profile</li>
                 <div id="profilePicture"></div>
-                <li class="sidebar-nav-rt pub-btn"><a href="/users/login">SIGN IN</a> </li>
+                <img class="sidepic" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="">
+                <li class="sidebar-nav-rt pub-btn eded"><a href="/users/login">SIGN IN <i class="fas fa-sign-in-alt"></i></a> </li>
                 <li class="sidebar-nav-rt version"> v 1.0.3</li>
         <%  } %>
         
