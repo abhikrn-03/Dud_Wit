@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const express = require("express")
 const fetch = require('node-fetch')
 const dotenv = require('dotenv')
@@ -23,6 +24,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const app = express()
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
+const avatarPath = path.join(__dirname, '../public/images/defAvatar.png')
 
 app.use(express.json())
 app.use(bodyParser.json())
@@ -55,6 +57,11 @@ passport.use('local-signup', new LocalStrategy({
             }
             else {
                 var newUser = new User();
+                var finalImg = {
+                    contentType: 'image/png',
+                    image: fs.readFileSync(avatarPath)
+                }
+                newUser.avatar = finalImg
                 newUser.email = req.body.email;
                 newUser.password = newUser.generateHash(password);
                 newUser.age = req.body.age
@@ -113,7 +120,12 @@ passport.use('google-auth', new GoogleStrategy({
             if(existing){
                 return done(new Error("There already exists an account with this email."))
             }
+            var finalImg = {
+                contentType: 'image/png',
+                image: fs.readFileSync(avatarPath)
+            }
             const newUser = new User({
+                'avatar': finalImg,
                 'google_id': profile.id,
                 'name': profile.displayName,
                 'email': profile.emails[0].value
