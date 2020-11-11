@@ -40,7 +40,6 @@ app.use(userRouter)
 app.use(blogRouter)
 
 var img = fs.readFileSync(avatarPath)
-img = sharp(img).resize({width: 250, height: 250})
 var finalImg = {
     contentType: 'image/png',
     image: img
