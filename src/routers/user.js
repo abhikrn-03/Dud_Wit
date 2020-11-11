@@ -7,6 +7,7 @@ const connectEnsureLogin = require('connect-ensure-login')
 const _ = require('lodash')
 const router = new express.Router()
 const multer = require('multer')
+const { EDESTADDRREQ } = require('constants')
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -119,6 +120,20 @@ router.get('/auth/google/BlogBower', passport.authenticate('google-auth', {
 router.get('/users/logout', connectEnsureLogin.ensureLoggedIn('/users/login'), (req, res) => {
     req.logout()
     res.redirect('/')
+})
+
+router.post('/users/delete/', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
+    try {
+        const penName = req.body.penName
+        if (penName == req.user.penName) {
+            await Blog.deleteMany({penName: penName})
+            req.logout()
+            await User.deleteOne({penName: penName})
+            return res.status(200).send()
+        }
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
 router.get('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
