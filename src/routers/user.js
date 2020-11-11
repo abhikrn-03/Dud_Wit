@@ -1,6 +1,8 @@
 const fs = require('fs')
 const fetch = require('node-fetch')
 const RandomOrg = require('random-org')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 var random = new RandomOrg({apiKey: process.env.RANDOM_API_KEY})
 const express = require('express')
 const passport = require('passport')
@@ -12,6 +14,10 @@ const router = new express.Router()
 const multer = require('multer')
 const { EDESTADDRREQ } = require('constants')
 const jwt = require('jsonwebtoken')
+const { rest } = require('lodash')
+const { response } = require('express')
+const { getMaxListeners } = require('../models/user')
+const { url } = require('inspector')
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -111,14 +117,20 @@ router.get('/users/login', async (req, res) => {
 
 router.post('/users/signUp', passport.authenticate('local-signup', {}), async (req, res) => {
     try {
-        res.redirect('/users/'+req.user.penName+'/profile/')
+        req.logout()
+        res.redirect('/users/verifyEmail/'+req.body.email)
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
 router.post('/users/signIn', passport.authenticate('local-login', {}), (req, res) => {
-    res.redirect('/users/'+req.user.penName+'/profile/')
+    if(!req.user.verified){
+        const email = req.user.email
+        req.logout()
+        return res.redirect('/users/verifyEmail/'+email)
+    }
+    res.redirect('/users/'+req.body.penName+'/profile/')
 })
 
 router.get('/users/google', passport.authenticate('google-auth', {
@@ -184,19 +196,53 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
     }
 })
 
-// router.get('/users/verifyEmail', async (req, res) => {
-//     try {
-//         params = {n: 1, length: 16, characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}
-//         const getVerificationKey = await random.generateStrings(params)
-//         const verficationKey = getVerificationKey.random.data[0]
-//         const token = jwt.sign({key: verficationKey}, process.env.SECRET)
-//     }
-// })
+router.get('/users/verifyEmail/:email', async (req, res) => {
+    try {
+        const recipient = req.params.email
+        params = {n: 1, length: 32, characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}
+        const getVerificationKey = await random.generateStrings(params)
+        const verficationKey = getVerificationKey.random.data[0]
+        const token = jwt.sign({email: recipient, key: verficationKey}, process.env.SECRET, {expiresIn: '15m'})
+        var user = await User.findOne({email:recipient})
+        user.verificationToken = verficationKey
+        await user.save()
+        const url = 'http://'+req.get('host')+'/verify?id='+token
+        const msg = {
+            to: recipient,
+            from: 'blogbower@gmail.com',
+            subject: 'Verfiy your BlogBower account.',
+            text: url,
+            html: '<br> <strong>Open this link to verify your BlogBower account!</strong> <br> <a href='+url+'>'+url+'</a>'
+        }
+        sgMail.send(msg).then(() => {
+            console.log('Mail sent')
+        }).catch((error) => {
+            console.log('error'+error)
+        })
+    } catch (e) {
+        res.status(400).send("error"+e)
+    }
+})
 
-// router.post('/users/verifyEmail', async (req, res) => {
-
-// })
-
+router.get('/verify', async (req, res) => {
+    try {
+        const id = req.query.id
+        const decodedId = jwt.verify(id, process.env.SECRET)
+        const email = decodedId.email
+        var user = await User.findOne({email: email})
+        if (decodedId.key == user.verificationToken){
+            user.verified = true
+            user.verificationToken = null
+            await user.save()
+            res.redirect('/users/login/')
+        }
+        else{
+            return (new Error("Invalid Link"))
+        }
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
 
 router.get('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try{
