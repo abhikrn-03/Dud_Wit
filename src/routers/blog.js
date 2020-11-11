@@ -14,6 +14,8 @@ router.get('/compose', connectEnsureLogin.ensureLoggedIn('/users/login'), async 
             blogBody: null,
             penName: req.user.penName,
             name: req.user.name,
+            avatar: req.user.avatar,
+            age: req.user.age,
             email: req.user.email
         })
     } catch (e) {
@@ -31,6 +33,8 @@ router.get('/community', async (req, res) => {
             penName: req.user.penName,
             name: req.user.name,
             email: req.user.email,
+            avatar: req.user.avatar,
+            age: req.user.age,
             Flag: true,
             blogs
         })
@@ -41,7 +45,9 @@ router.get('/community', async (req, res) => {
             name: null,
             penName: null,
             email: null,
+            avatar: null,
             Flag: true,
+            age: null,
             blogs
         })
         } 
@@ -83,7 +89,9 @@ router.get('/edit/:blogger/:title/:blog_id', connectEnsureLogin.ensureLoggedIn('
             blogTitle: blogTitle,
             blogBody: blogBody,
             penName: req.user.penName,
+            age: req.user.age,
             name: req.user.name,
+            avatar: req.user.avatar,
             email: req.user.email
         })
     } catch (e) {
@@ -135,6 +143,8 @@ router.get('/search/:type/:query', async(req, res) => {
             penName: req.user.penName,
             name: req.user.name,
             email: req.user.email,
+            avatar: req.user.avatar,
+            age: req.user.age,
             Flag: true,
             blogs: matches
         })
@@ -146,6 +156,8 @@ router.get('/search/:type/:query', async(req, res) => {
             penName: null,
             email: null,
             Flag: true,
+            avatar: null,
+            age: null,
             blogs: matches
         })
         } 
@@ -177,7 +189,9 @@ router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
                 blogger: blog.penName,
                 penName: null,
                 name: null,
+                age: null,
                 email: null,
+                avatar: null,
                 Flag: false,
             })
         }
@@ -189,7 +203,9 @@ router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
                 blogger: blog.penName,
                 penName: req.user.penName,
                 name: req.user.name,
+                age: req.user.age,
                 email: req.user.email,
+                avatar: req.user.avatar,
                 Flag: true
             })
         }
@@ -201,7 +217,9 @@ router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
                 blogger: blog.penName,
                 penName: req.user.penName,
                 name: req.user.name,
+                age: req.user.age,
                 email: req.user.email,
+                avatar: req.user.avatar,
                 Flag: false
             })
         }
