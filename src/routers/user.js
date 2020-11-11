@@ -269,6 +269,7 @@ router.post('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/user
     if(req.file){
         try {
             var img = fs.readFileSync(req.file.path)
+            img = await sharp(img).resize({width: 250, height: 250})
             var finalImg = {
                 contentType: req.file.mimetype,
                 image: img
