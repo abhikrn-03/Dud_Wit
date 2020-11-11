@@ -1,4 +1,7 @@
 const fs = require('fs')
+const fetch = require('node-fetch')
+const RandomOrg = require('random-org')
+var random = new RandomOrg({apiKey: process.env.RANDOM_API_KEY})
 const express = require('express')
 const passport = require('passport')
 const User = require('../models/user')
@@ -8,6 +11,7 @@ const _ = require('lodash')
 const router = new express.Router()
 const multer = require('multer')
 const { EDESTADDRREQ } = require('constants')
+const jwt = require('jsonwebtoken')
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -167,6 +171,20 @@ router.post('/users/setupProfile', connectEnsureLogin.ensureLoggedIn('/users/log
         res.status(400).send(e)
     }
 })
+
+// router.get('/users/verifyEmail', async (req, res) => {
+//     try {
+//         params = {n: 1, length: 16, characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}
+//         const getVerificationKey = await random.generateStrings(params)
+//         const verficationKey = getVerificationKey.random.data[0]
+//         const token = jwt.sign({key: verficationKey}, process.env.SECRET)
+//     }
+// })
+
+// router.post('/users/verifyEmail', async (req, res) => {
+
+// })
+
 
 router.get('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
     try{
