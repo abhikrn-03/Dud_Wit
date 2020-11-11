@@ -239,12 +239,25 @@ body{
     display: flex;
 }
 
-.user-about h3{
+.user-about h3 {
     text-align: left;
     font-weight: bold;
     font-family: 'Pacifico', cursive;
     padding-right: 40%;
     font-weight: 300;
+}
+
+#blogger {
+    text-align: left;
+    font-weight: bold;
+    font-family: 'Pacifico', cursive;
+    padding-right: 40%;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+#postTitle {
+    font-family: 'Roboto', sans-serif;
 }
 
 .user-about h5{
