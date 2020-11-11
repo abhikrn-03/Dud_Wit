@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const sharp = require('sharp')
 const express = require("express")
 const fetch = require('node-fetch')
 const dotenv = require('dotenv')
@@ -38,6 +39,13 @@ app.use(passport.session())
 app.use(userRouter)
 app.use(blogRouter)
 
+var img = fs.readFileSync(avatarPath)
+img = await sharp(img).resize({width: 250, height: 250})
+var finalImg = {
+    contentType: 'image/png',
+    image: img
+}
+
 passport.use('local-signup', new LocalStrategy({
     usernameField: 'penName',
     passwordField: 'password',
@@ -58,10 +66,6 @@ passport.use('local-signup', new LocalStrategy({
             }
             else {
                 var newUser = new User();
-                var finalImg = {
-                    contentType: 'image/png',
-                    image: fs.readFileSync(avatarPath)
-                }
                 newUser.avatar = finalImg
                 newUser.email = req.body.email;
                 newUser.password = newUser.generateHash(password);
@@ -117,10 +121,6 @@ passport.use('google-auth', new GoogleStrategy({
             const existing = await User.findOne({email: profile.emails[0].value})
             if(existing){
                 return done(new Error("There already exists an account with this email."))
-            }
-            var finalImg = {
-                contentType: 'image/png',
-                image: fs.readFileSync(avatarPath)
             }
             const newUser = new User({
                 'avatar': finalImg,
