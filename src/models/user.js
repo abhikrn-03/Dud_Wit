@@ -58,7 +58,8 @@ const userSchema = mongoose.Schema({
     }, 
     about: {
         type: String,
-        trim: true
+        trim: true,
+        default: 'Hey, I am using BlogBower!'
     },
     verified: {
         type: Boolean,
