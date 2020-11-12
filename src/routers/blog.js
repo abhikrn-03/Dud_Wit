@@ -186,9 +186,9 @@ router.post('/blogs/like/:user/:blogName/:blog_id', connectEnsureLogin.ensureLog
     }
 })
 
-router.get('/search/:type/:query', async(req, res) => {
+router.get('/search/:type/', async(req, res) => {
     try {
-        const query = req.params.query.toLowerCase()
+        const query = req.query.query.toLowerCase()
         const keywords = query.split(" ")
         var blogs = await Blog.find({})
         if (req.params.type === 'byTags'){

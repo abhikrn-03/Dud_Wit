@@ -308,6 +308,10 @@ router.get('/users/verifyEmail/:email', async (req, res) => {
             html: '<br> <strong>Open this link to verify your BlogBower account!</strong> <br> <a href='+url+'>'+url+'</a>'
         }
         sgMail.send(msg)
+        res.render('emailSent', {
+            heading: 'Email Sent!',
+            message: 'An email with the verification link has been sent to your email id. Click on and you will be automatically verified and redirected to the login page. Login using your Pen Name and password.'
+        })
     } catch (e) {
         res.status(400).send(e)
     }
