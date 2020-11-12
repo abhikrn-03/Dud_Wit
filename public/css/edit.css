@@ -11,7 +11,7 @@
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
 	height: 100%;
-	margin: 20px 50px;
+	margin: 100px 50px;
 }
 
 .wrap{
@@ -36,7 +36,8 @@
 	overflow: hidden;
 	width: 868px;
 	max-width: 150%;
-	min-height: 500px;
+	min-height: 600px;
+	margin-top:200px;
 	padding: 20px 0 120px 0;
 }
 
@@ -49,6 +50,23 @@
 	flex-direction: column;
 	padding: 50px 50px 0 50px;
 	height: 100%;
+	text-align: center;
+}
+
+.prof form.delac{
+	background: linear-gradient(to right, #2f4454,#9b3a33);
+	display: flex;
+	color:#eee;
+	width:868px;
+	min-height:200px;
+	margin-bottom: 100px;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	border-radius:20px;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+	0 10px 10px rgba(0,0,0,0.22);
 	text-align: center;
 }
 

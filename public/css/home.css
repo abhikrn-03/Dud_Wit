@@ -353,3 +353,8 @@ a.eded:hover{
 .like button:focus {
     outline: none;
 }
+
+
+#menu-toggle-rt{
+    font-size:20px;
+}
