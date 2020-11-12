@@ -32,7 +32,7 @@ var storage = multer.diskStorage({
 var upload = multer({
     storage: storage,
     limits: {
-        fileSize: 255000
+        fileSize: 1000000
     },
     fileFilter(req, file, cb) {
         if(!file.originalname.match(/\.(jpeg|jpg|png)$/)){
@@ -343,7 +343,8 @@ router.get('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/users
             name: user.name,
             age: user.age,
             gender: user.gender,
-            penName: user.penName
+            penName: user.penName,
+            about: user.about
         })
     } catch (e){
         res.status(400).send(e)
@@ -361,6 +362,13 @@ router.post('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/user
                 image: img
             }
             await User.findByIdAndUpdate(_id, { avatar: finalImg})
+        } catch (e) {
+            return res.status(400).send(e)
+        }
+    }
+    if(reqBody.about){
+        try {
+            await User.findByIdAndUpdate(_id, { about: reqBody.about })
         } catch (e) {
             return res.status(400).send(e)
         }
