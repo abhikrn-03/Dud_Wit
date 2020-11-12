@@ -11,7 +11,7 @@
 <form action="/users/<%=penName%>/editProfile" method="post" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="Name: <%= name %>" />
     <input type="text" name="age" placeholder="Age: <%= age %>" />
-    <textarea name="about" id="" placeholder="<%=about%>" cols="30" rows="10">Hey! I'm using Blogbower</textarea>
+    <input type="text" name="about" id="" placeholder="Maximum 50 characters."></input>
     <input class="emailin" type="text" list="genders" placeholder="SEX: <%=gender%>">
     <datalist id="genders">
         <option value="MALE">
