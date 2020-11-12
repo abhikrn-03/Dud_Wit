@@ -1,6 +1,5 @@
 const path = require('path')
 const fs = require('fs')
-const sharp = require('sharp')
 const express = require("express")
 const fetch = require('node-fetch')
 const dotenv = require('dotenv')

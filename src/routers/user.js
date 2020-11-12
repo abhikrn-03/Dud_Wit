@@ -60,6 +60,7 @@ router.get('/users/:penName/profile/', async (req, res) => {
             email: null,
             proPen: user.penName,
             proAvatar: user.avatar,
+            proAbout: user.about,
             proName: user.name,
             proAge: user.age,
             Flag: false,
@@ -77,6 +78,7 @@ router.get('/users/:penName/profile/', async (req, res) => {
             proPen: user.penName,
             proAvatar: user.avatar,
             proName: user.name,
+            proAbout: user.about,
             proAge: user.age,
             Flag: false,
             blogs
@@ -93,6 +95,7 @@ router.get('/users/:penName/profile/', async (req, res) => {
             proPen: user.penName,
             proAvatar: user.avatar,
             proName: user.name,
+            proAbout: user.about,
             proAge: user.age,
             Flag: false,
             blogs
