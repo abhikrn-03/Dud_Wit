@@ -214,27 +214,28 @@ router.get('/forgotPassword', async (req, res) => {
 router.post('/forgotPassword', async (req, res) => {
     try {
         const email = req.body.email
-        console.log(email)
         params = {n: 1, length: 32, characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}
         const getVerificationKey = await random.generateStrings(params)
         const verificationKey = getVerificationKey.random.data[0]
-        console.log(verificationKey)
-        const token = jwt.sign({email: email, key: verficationKey}, process.env.SECRET, {expiresIn: '15m'})
-        var user = await User.findOne({email:email})
-        console.log(user)
+        const token = jwt.sign({email: email, key: verificationKey}, process.env.SECRET, {expiresIn: '15m'})
+        var user = await User.findOne({email: email})
+        if (user == null){
+            return res.json({error: 'There exists no account with this email'})
+        }
         user.verificationToken = verificationKey
         await user.save()
         const url = 'http://'+req.get('host')+'/resetPassword/'+token
-        console.log(url)
-        const msg = {
+        var msg = {
             to: email,
             from: 'blogbower@gmail.com',
             subject: 'Reset the password for your BlogBower account.',
-            text: '',
+            text: url,
             html: '<br> <strong>Open this link to reset your password.</strong> <br> <a href='+url+'>'+url+'</a>'
         }
-        sgMail.send(msg).then(() => {
-            console.log('Mail Sent')
+        sgMail.send(msg)
+        res.render('emailSent', {
+            heading: 'Email Sent!',
+            message: 'An email with the link to reset your password has been sent to your email id. You will be redirected to the login page once you are done setting up your new password. Login using the new credentials.'
         })
     } catch (e) {
         res.status(400).send()
@@ -254,7 +255,7 @@ router.get('/resetPassword/:token', async (req, res) => {
             })
         }
         else {
-            return (new Error("Invalid Link"))
+            res.json({error: 'Invalid link'})
         }
     } catch (e) {
         res.status(500).send(e)
@@ -274,7 +275,7 @@ router.post('/resetPassword/:token', async (req, res) => {
             res.redirect('/users/login')
         }
         else {
-            return (new Error('Invalid Link'))
+            res.json({error: 'Invalid link'})
         }
 
     } catch (e) {
@@ -287,10 +288,10 @@ router.get('/users/verifyEmail/:email', async (req, res) => {
         const recipient = req.params.email
         params = {n: 1, length: 32, characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}
         const getVerificationKey = await random.generateStrings(params)
-        const verficationKey = getVerificationKey.random.data[0]
-        const token = jwt.sign({email: recipient, key: verficationKey}, process.env.SECRET, {expiresIn: '15m'})
+        const verificationKey = getVerificationKey.random.data[0]
+        const token = jwt.sign({email: recipient, key: verificationKey}, process.env.SECRET, {expiresIn: '15m'})
         var user = await User.findOne({email:recipient})
-        user.verificationToken = verficationKey
+        user.verificationToken = verificationKey
         await user.save()
         const url = 'http://'+req.get('host')+'/verifyEmail/'+token
         const msg = {
@@ -319,7 +320,7 @@ router.get('/verifyEmail/:token', async (req, res) => {
             res.redirect('/users/login/')
         }
         else{
-            return (new Error("Invalid Link"))
+            res.send({error: 'Invalid link'})
         }
     } catch (e) {
         res.status(500).send(e)
