@@ -1,8 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const sharp = require('sharp')
 const express = require("express")
-const fetch = require('node-fetch')
 const dotenv = require('dotenv')
 dotenv.config()
 const passport = require('passport')
@@ -20,6 +18,7 @@ const expressSession = require('express-session')({
 })
 const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+
 const sgMail = require('@sendgrid/mail')
 const { use } = require('passport')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
