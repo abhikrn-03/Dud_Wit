@@ -62,8 +62,8 @@
             <div class="col-lg-12">
               <div class="postHead">
                 <h1 id="postTitle"><%=title%> </h1>
-                <!-- <form action="/blogs/like/<%=blogger%>/<%=title%>/<%=_id%>" method="post" class="like">
-                  <button type="submit"><i class="far fa-heart"></i></button>   <%=likes%> bloggers have liked this post</form> -->
+                <form action="/blogs/like/<%=blogger%>/<%=title%>/<%=_id%>" method="post" class="like">
+                  <button type="submit"><i class="far fa-heart"></i></button>   <%=likes%> bloggers have liked this post</form>
               </div>
               <h2 id="blogger"><%=blogger%></h2>
               <% let today = new Date().toString() %>
