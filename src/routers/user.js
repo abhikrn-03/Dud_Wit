@@ -397,7 +397,7 @@ router.post('/users/:user/editProfile', connectEnsureLogin.ensureLoggedIn('/user
             return res.status(400).send(e)
         }
     }
-    return res.redirect('/users/'+req.user.penName+'/editProfile')
+    return res.redirect('/users/'+req.user.penName+'/profile')
 }, (error, req, res, next) => {
     res.status(400).send({error: error.message})
 })
