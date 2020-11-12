@@ -220,7 +220,9 @@ router.post('/forgotPassword', async (req, res) => {
         const token = jwt.sign({email: email, key: verificationKey}, process.env.SECRET, {expiresIn: '15m'})
         var user = await User.findOne({email: email})
         if (user == null){
-            return res.json({error: 'There exists no account with this email'})
+            await res.render('Error', {
+                error: 'There exists no account with this email'
+            })
         }
         user.verificationToken = verificationKey
         await user.save()
@@ -255,7 +257,9 @@ router.get('/resetPassword/:token', async (req, res) => {
             })
         }
         else {
-            res.json({error: 'Invalid link'})
+            await res.render('Error', {
+                error: 'Invalid link'
+            })
         }
     } catch (e) {
         res.status(500).send(e)
@@ -275,7 +279,9 @@ router.post('/resetPassword/:token', async (req, res) => {
             res.redirect('/users/login')
         }
         else {
-            res.json({error: 'Invalid link'})
+            await res.render('Error', {
+                error: 'Invalid link'
+            })
         }
 
     } catch (e) {
