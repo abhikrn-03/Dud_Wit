@@ -16,6 +16,9 @@ const Blog = mongoose.model('Blog', {
     },
     tags: [{
         type: String
+    }],
+    likedPens: [{
+        type: String
     }]
 })
 

@@ -60,7 +60,11 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1 id="postTitle"><%=title%></h1>
+              <div class="postHead">
+                <h1 id="postTitle"><%=title%> </h1>
+                <!-- <form action="/blogs/like/<%=blogger%>/<%=title%>/<%=_id%>" method="post" class="like">
+                  <button type="submit"><i class="far fa-heart"></i></button>   <%=likes%> bloggers have liked this post</form> -->
+              </div>
               <h2 id="blogger"><%=blogger%></h2>
               <% let today = new Date().toString() %>
               <% let bStamp = _id.getTimestamp() %>
@@ -110,7 +114,7 @@
                 <% zero = true %>
               <% } %>
               <% if ((today.substring(0,15))==bStamp.toString().substring(0,15)){%>
-                <span class="">
+                <span class="postTime">
                   <% if (zero) { %>
                     <p>Last edited at <%=bHour%>:0<%=bMin%> <%=meridian%></p>
                   <% } else { %>
@@ -118,7 +122,7 @@
                   <% } %>
                 </span><br>
               <%} else if ((today.substring(4,7)==bStamp.toString().substring(4,7))&&(parseInt(today.substring(8,10))-parseInt(bStamp.toString().substring(8,10))==1)&&(today.substring(11,15)==bStamp.toString().substring(11,15))) {%>
-                <span class="">
+                <span class="postTime">
                   <% if (zero){ %>
                     <p>Edited yesterday at <%=bHour%>:0<%=bMin%> <%=meridian%> </p>
                   <% } else { %>
@@ -126,14 +130,13 @@
                   <% } %>
                 </span><br>
               <%} else {%>
-                <span class="">
+                <span class="postTime">
                   <p>Published on <%=week[bDay]%>, <%=month[bMonth]%> <%=bDate%></p>
                 </span><br>
               <%}%>
-                <br>
                 <% if (Flag){%>
-                  <a class="btn eded" href="/edit/<%=blogger%>/<%=title%>/<%= _id %>"><i class="far fa-edit"></i></a>
-                  <a class="btn eded" href="/delete/<%= _id %>"><i class="fas fa-trash"></i></a>
+                  <a class="btn eded" href="/edit/<%=blogger%>/<%=title%>/<%=_id %>"><i class="far fa-edit"></i></a>
+                  <a class="btn eded" href="/delete/<%=_id %>"><i class="fas fa-trash"></i></a>
                 <%}%>
                 <div class="blogg1">
                   <textarea name="" id="postbg" cols="180" rows="1000" disabled><%=body%></textarea>
