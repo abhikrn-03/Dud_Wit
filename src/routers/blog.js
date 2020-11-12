@@ -3,6 +3,7 @@ const Blog = require('../models/blog')
 const connectEnsureLogin = require('connect-ensure-login')
 const router = new express.Router()
 const _ = require('lodash')
+const User = require('../models/user')
 
 let blogs = []
 
@@ -61,10 +62,12 @@ router.post('/compose', connectEnsureLogin.ensureLoggedIn('/users/login'), async
         'title': req.body.postTitle,
         'body': req.body.postBody,
         'penName': req.user.penName,
+        'likedPens': [req.user.penName]
     })
 
     try {
         await blog.save()
+        console.log(blog.likedPens)
         blogs = await Blog.find({})
         res.status(201).redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
@@ -106,6 +109,50 @@ router.get('/delete/:id', connectEnsureLogin.ensureLoggedIn('/users/login'), asy
         res.redirect('/users/'+req.user.penName+'/profile/')
     } catch (e) {
         res.status(400).send(e)
+    }
+})
+
+router.post('/blogs/like/:user/:blogName/:blog_id', connectEnsureLogin.ensureLoggedIn('/users/login'), async (req, res) => {
+    const user = await User.find({penName: req.user.penName})
+    const blog = await Blog.find({penName: req.params.user})
+    const likers = blog.likedPens
+    const likes = blog.likedPens.length-1
+    console.log(likers.includes(user.penName))
+    try {
+        if (likers.includes(user.penName)){
+            res.render('post', {
+                title: blog.title,
+                body: blog.body,
+                _id: blog._id,
+                blogger: blog.penName,
+                likes,
+                penName: req.user.penName,
+                name: req.user.name,
+                age: req.user.age,
+                email: req.user.email,
+                avatar: req.user.avatar,
+                Flag: true
+            })
+        } else {
+            likes = likes+1
+            likers.push(user.penName)
+            await Blog.findByIdAndUpdate(blog._id, { likedPens: likers })
+            res.render('post', {
+                title: blog.title,
+                body: blog.body,
+                _id: blog._id,
+                blogger: blog.penName,
+                likes,
+                penName: req.user.penName,
+                name: req.user.name,
+                age: req.user.age,
+                email: req.user.email,
+                avatar: req.user.avatar,
+                Flag: true
+            })
+        }
+    } catch (e) {
+        res.status(500).send(e)
     }
 })
 
@@ -187,6 +234,7 @@ router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
                 body: blog.body,
                 _id: blog._id,
                 blogger: blog.penName,
+                likes: blog.likedPens.length-1,
                 penName: null,
                 name: null,
                 age: null,
@@ -196,12 +244,14 @@ router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
             })
         }
         else if ((req.user) && (req.user.penName == blog.penName)){
+            console.log(blog.likedPens)
             return await res.render('post', {
                 title: blog.title,
                 body: blog.body,
                 _id: blog._id,
                 blogger: blog.penName,
                 penName: req.user.penName,
+                likes: blog.likedPens.length-1,
                 name: req.user.name,
                 age: req.user.age,
                 email: req.user.email,
@@ -216,6 +266,7 @@ router.get('/blogs/:user/:blogName/:blog_id', async (req, res) => {
                 _id: blog._id,
                 blogger: blog.penName,
                 penName: req.user.penName,
+                likes: blog.likedPens.length-1,
                 name: req.user.name,
                 age: req.user.age,
                 email: req.user.email,

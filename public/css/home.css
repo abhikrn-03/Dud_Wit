@@ -256,10 +256,6 @@ body{
     font-size: 30px;
 }
 
-#postTitle {
-    font-family: 'Roboto', sans-serif;
-}
-
 .user-about h5{
     text-align: left;
     font-family: 'Inconsolata', monospace;
@@ -302,4 +298,58 @@ a.eded:hover{
     width: 30%;
     margin: 10px 25%;
     border-radius: 50%;
+}
+
+/* Search Bar */
+
+.search {
+    text-align: right;
+    margin-right: 5%;
+}
+
+.search input {
+    background-color: #eae7dc;
+    border-color: #fff;
+    border-radius: 25px;
+    width: 40%;
+    padding: 13px 15px;
+    height: 50%;
+    font-size: 18px;
+}
+
+.search input:focus, .search button:focus {
+    outline: none;
+}
+
+.search button:hover {
+    font-size: 28px;
+}
+
+.search button{
+    font-size: 26px;
+    border: 0px #eae7dc;
+    background-color: #eae7dc;
+    margin-left: 1%;
+}
+
+/* Post Display */
+
+#postTitle {
+    font-family: 'Roboto', 'cursive';
+}
+
+.like {
+    float: right;
+    font-family: 'Roboto', 'cursive';
+}
+
+.like button {
+    background-color: #eae7dc;
+    color: purple;
+    font-size: 25px;
+    border-color: #eae7dc;
+}
+
+.like button:focus {
+    outline: none;
 }
