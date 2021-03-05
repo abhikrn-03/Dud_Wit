@@ -1,6 +1,6 @@
 # Blogbower
 
-#Participants
+## Participants
 
 Abhik Sen
 Archit Anand
